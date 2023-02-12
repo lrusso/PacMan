@@ -624,10 +624,11 @@ PacMan.Game.prototype = {
         this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
         //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
-        this.pacman = this.add.sprite((14 * 16) + 8, (17 * 16) + 8, "imageGameSpritesheetPacman", 0);
+        this.pacman = this.add.sprite((14 * 16), (17 * 16) + 8, "imageGameSpritesheetPacman", 0);
         this.pacman.anchor.set(0.5);
         this.pacman.animations.add("munch", [0, 1, 2, 1], 20, true);
         this.pacman.scale.x = -1;
+        this.pacman.frame = 1;
 
         this.physics.arcade.enable(this.pacman);
         this.pacman.body.setSize(16, 16, 0, 0);
@@ -642,8 +643,8 @@ PacMan.Game.prototype = {
         this.keyD = game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.keyW = game.input.keyboard.addKey(Phaser.Keyboard.W);
 
-        // WAITING 500 MS
-        game.time.events.add(500, function()
+        // WAITING 4500 MS
+        game.time.events.add(4500, function()
             {
             game.state.states["PacMan.Game"].introDone = true;
             game.state.states["PacMan.Game"].pacman.play("munch");
