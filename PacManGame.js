@@ -34,9 +34,9 @@ if (userLanguage.substring(0,2)=="es")
     STRING_DISCLAIMER1 = "DESCARGO DE RESPONSABILIDAD";
     STRING_DISCLAIMER2 = "Los recursos de Pac-Man";
     STRING_DISCLAIMER3 = "(im" + String.fromCharCode(225) + "genes, fuentes, m" + String.fromCharCode(250) + "sica y sonidos)";
-    STRING_DISCLAIMER4 = "se proporcionan UNICAMENTE con fines";
-    STRING_DISCLAIMER5 = "educativos. Esta demostraci" + String.fromCharCode(243) + "n no est" + String.fromCharCode(225);
-    STRING_DISCLAIMER6 = "afiliada ni respaldada por sus";
+    STRING_DISCLAIMER4 = "se proporcionan UNICAMENTE con";
+    STRING_DISCLAIMER5 = "fines educativos. Esta demostraci" + String.fromCharCode(243) + "n";
+    STRING_DISCLAIMER6 = "no est" + String.fromCharCode(225) + " afiliada ni respaldada por sus";
     STRING_DISCLAIMER7 = "respectivos titulares de";
     STRING_DISCLAIMER8 = "derechos de autor.";
     STRING_DISCLAIMER9_DESKTOP = "Haga click para continuar";
