@@ -2,7 +2,7 @@
 
 Pac-Man game in JavaScript.
 
-![alt screenshot](https://raw.githubusercontent.com/lrusso/PacMan/main/PacMan.png)
+![alt screenshot](https://lrusso.github.io/PacMan/PacMan.png)
 
 ## Web:
 
