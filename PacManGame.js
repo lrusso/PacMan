@@ -648,7 +648,16 @@ PacMan.Game.prototype = {
         this.highScoreValue = game.add.bitmapText(0, -18, "ArialBlackWhite", "0", 16);
         this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
         this.highScoreValue.tint = 0XE6E600;
-        
+
+        // ADDING THE THREE LIFES INDICATOR
+        this.life1 = this.add.sprite(340, -36, "imageGameSpritesheetPacman", 0);
+        this.life1.frame = 1;
+        this.life2 = this.add.sprite(375, -36, "imageGameSpritesheetPacman", 0);
+        this.life2.frame = 1;
+        this.life3 = this.add.sprite(410, -36, "imageGameSpritesheetPacman", 0);
+        this.life3.frame = 1;
+
+        // REGISTERING THE CURSOR KEYS
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // REGISTERING THE 'A', 'S', 'D' AND 'W' KEYS
