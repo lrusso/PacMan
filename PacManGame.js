@@ -643,13 +643,27 @@ PacMan.Game.prototype = {
         this.keyD = game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.keyW = game.input.keyboard.addKey(Phaser.Keyboard.W);
 
-        // WAITING 4500 MS
-        game.time.events.add(4500, function()
+        // CHECKING IF THE SOUND IS ENABLED
+        if (GAME_SOUND_ENABLED==false)
             {
-            game.state.states["PacMan.Game"].introDone = true;
-            game.state.states["PacMan.Game"].pacman.play("munch");
-            game.state.states["PacMan.Game"].move(Phaser.LEFT);
-            });
+            // WAITING 500 MS
+            game.time.events.add(500, function()
+                {
+                game.state.states["PacMan.Game"].introDone = true;
+                game.state.states["PacMan.Game"].pacman.play("munch");
+                game.state.states["PacMan.Game"].move(Phaser.LEFT);
+                });
+            }
+            else
+            {
+            // WAITING 4500 MS
+            game.time.events.add(4500, function()
+                {
+                game.state.states["PacMan.Game"].introDone = true;
+                game.state.states["PacMan.Game"].pacman.play("munch");
+                game.state.states["PacMan.Game"].move(Phaser.LEFT);
+                });
+             }
         },
 
     checkKeys: function ()
