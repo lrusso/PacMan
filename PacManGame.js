@@ -46,7 +46,7 @@ if (userLanguage.substring(0,2)=="es")
     STRING_DISCLAIMER9_DESKTOP = "Haga click para continuar";
     STRING_DISCLAIMER9_MOBILE = "Presione para continuar";
     STRING_SCORE = "PUNTAJE";
-    STRING_HIGHSCORE = "RECORD";
+    STRING_HIGHSCORE = "   RECORD   ";
     }
     else
     {
@@ -60,7 +60,7 @@ if (userLanguage.substring(0,2)=="es")
     STRING_DISCLAIMER8 = "";
     STRING_DISCLAIMER9_DESKTOP = "Click to continue";
     STRING_DISCLAIMER9_MOBILE = "Tap to continue";
-    STRING_SCORE = "SCORE";
+    STRING_SCORE = "  SCORE  ";
     STRING_HIGHSCORE = "HIGHSCORE";
     }
 
