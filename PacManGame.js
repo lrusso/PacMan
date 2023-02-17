@@ -569,6 +569,18 @@ PacMan.Game = function (game)
     this.keyW = null;
 
     this.introDone = null;
+
+    this.scoreLabel = null;
+    this.scoreValue = null;
+    this.highScoreLabel = null;
+    this.highScoreValue = null;
+    this.soundHandlerOnBackground = null;
+    this.soundHandlerOnSprite = null;
+    this.soundHandlerOffBackground = null;
+    this.soundHandlerOffSprite = null;
+    this.life1 = null;
+    this.life2 = null;
+    this.life3 = null;
     };
 
 PacMan.Game.prototype = {
@@ -602,6 +614,18 @@ PacMan.Game.prototype = {
         this.keyW = null;
 
         this.introDone = false;
+
+        this.scoreLabel = null;
+        this.scoreValue = null;
+        this.highScoreLabel = null;
+        this.highScoreValue = null;
+        this.soundHandlerOnBackground = null;
+        this.soundHandlerOnSprite = null;
+        this.soundHandlerOffBackground = null;
+        this.soundHandlerOffSprite = null;
+        this.life1 = null;
+        this.life2 = null;
+        this.life3 = null;
         },
 
     create: function ()
