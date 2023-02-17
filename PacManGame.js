@@ -677,7 +677,7 @@ PacMan.Game.prototype = {
         this.highScoreLabel.tint = 0XE6E600;
 
         // ADDING THE HIGHSCORE VALUE
-        this.highScoreValue = game.add.bitmapText(0, -18, "ArialBlackWhite", "0", 16);
+        this.highScoreValue = game.add.bitmapText(0, -18, "ArialBlackWhite", this.getHighscore(), 16);
         this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
         this.highScoreValue.tint = 0XE6E600;
 
@@ -955,6 +955,16 @@ PacMan.Game.prototype = {
         this.scoreValue.setText(this.score);
         this.scoreValue.position.x = this.scoreLabel.position.x + this.scoreLabel.width / 2 - this.scoreValue.width / 2;
 
+        // CHECKING IF THE CURRENT SCORE HITS THE HIGH SCORE
+        if (this.score>this.getHighscore())
+            {
+            // SETTING THE NEW HIGHSCORE
+            this.setHighscore(this.score);
+
+            // UPDATING THE HIGHSCORE WITH THE NEW VALUE
+            this.highScoreValue.setText(this.score);
+            }
+
         if (this.dots.total === 0)
             {
             this.dots.callAll("revive");
@@ -1015,7 +1025,53 @@ PacMan.Game.prototype = {
             catch(err)
             {
             }
-        },        
+        },
+
+    getHighscore: function()
+        {
+        try
+            {
+            var name = "highscorepacman";
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(";");
+
+            for(var i=0;i < ca.length;i++)
+                {
+                var c = ca[i];
+                while (c.charAt(0)==" ")
+                    {
+                    c = c.substring(1,c.length);
+                    }
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                }
+            }
+        catch(err)
+            {
+            }
+
+        return "0";
+        },
+
+    setHighscore: function(newHighscore)
+        {
+        try
+            {
+            var name = "highscorepacman";
+            var value = newHighscore;
+            var days = 999;
+            var expires = "";
+            if (days)
+                {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString() + "; SameSite=Lax";
+                }
+            document.cookie = name + "=" + (value || "")  + expires + "; Secure; path=/";
+            }
+            catch(err)
+            {
+            }
+        }
     };
 
 // SETTING THE DEFAULT RENDERER MODE
