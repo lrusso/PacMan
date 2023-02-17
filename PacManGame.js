@@ -609,31 +609,35 @@ PacMan.Game.prototype = {
         // SETTING THE BACKGROUND COLOR
         this.stage.backgroundColor = "#000000";
 
+        // MOVING THE WORLD 40PX UP
         game.world.setBounds(0, -40, 0, 0);
 
+        // ADDING THE MAP
         this.map = this.add.tilemap("map");
         this.map.addTilesetImage("pacman-tiles", "imageGameTiles");
 
+        // ADDING THE MAP LAYER
         this.layer = this.map.createLayer("Pacman");
 
+        // ADDING THE DOTS GROUP
         this.dots = this.add.physicsGroup();
 
+        // CREATING THE MAP
         this.map.createFromTiles(7, this.safetile, "imageGameDot", this.layer, this.dots);
 
-        //  The dots will need to be offset by 6px to put them back in the middle of the grid
+        // ADDING A 6PX OFFSET TO THE DOTS IN ORDER TO BE VERTICALLY AND HORIZONTALLY CENTERED
         this.dots.setAll("x", 6, false, false, 1);
         this.dots.setAll("y", 6, false, false, 1);
-
-        //  Pacman should collide with everything except the safe tile
+        
+        // SETTING THAT PACMAN WON'T COLLIDE WITH THE SAFETILE
         this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
-        //  Position Pacman at grid location 14x17 (the +8 accounts for his anchor)
+        // ADDING PACMAN AT THE GRID LOCATION 14x17 (+8 ACCOUNTS FOR HIS ANCHOR)
         this.pacman = this.add.sprite((14 * 16), (17 * 16) + 8, "imageGameSpritesheetPacman", 0);
         this.pacman.anchor.set(0.5);
         this.pacman.animations.add("munch", [0, 1, 2, 1], 12, true);
         this.pacman.scale.x = -1;
         this.pacman.frame = 1;
-
         this.physics.arcade.enable(this.pacman);
         this.pacman.body.setSize(16, 16, 0, 0);
 
@@ -772,7 +776,7 @@ PacMan.Game.prototype = {
                 // STARTING THE PACMAN MUNCH ANIMATION
                 game.state.states["PacMan.Game"].pacman.play("munch");
 
-                // MOVING THE PACMAN TO THE LEFT
+                // MOVING PACMAN TO THE LEFT
                 game.state.states["PacMan.Game"].move(Phaser.LEFT);
                 });
             }
@@ -787,7 +791,7 @@ PacMan.Game.prototype = {
                 // STARTING THE PACMAN MUNCH ANIMATION
                 game.state.states["PacMan.Game"].pacman.play("munch");
 
-                // MOVING THE PACMAN TO THE LEFT
+                // MOVING PACMAN TO THE LEFT
                 game.state.states["PacMan.Game"].move(Phaser.LEFT);
                 });
              }
