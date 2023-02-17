@@ -403,7 +403,7 @@ PacMan.Menu.prototype = {
             {
             // SHOWING THE SOUND DISABLED IMAGES
             this.menuSoundButton.loadTexture("imageMenuButtonDisabled");
-             this.menuSoundButtonIcon.loadTexture("imageMenuSoundOff");
+            this.menuSoundButtonIcon.loadTexture("imageMenuSoundOff");
             }
         else
             {
@@ -661,14 +661,11 @@ PacMan.Game.prototype = {
         this.life3 = this.add.sprite(410, -36, "imageGameSpritesheetPacman", 0);
         this.life3.frame = 1;
 
-        var soundIconX = 265;
-        var soundIconY = -37;
-
         // ADDING THE SOUND HANDLER ON BACKGROUND
         this.soundHandlerOnBackground = game.add.graphics();
         this.soundHandlerOnBackground.beginFill(0x022C5C, 1);
         this.soundHandlerOnBackground.lineStyle(2, 0x0046A9, 1);
-        this.soundHandlerOnBackground.drawRoundedRect(soundIconX, soundIconY, 38, 34, 10);
+        this.soundHandlerOnBackground.drawRoundedRect(265, -37, 38, 34, 10);
         this.soundHandlerOnBackground.inputEnabled = true;
         this.soundHandlerOnBackground.input.useHandCursor = true;
         this.soundHandlerOnBackground.events.onInputUp.add(function()
@@ -689,13 +686,13 @@ PacMan.Game.prototype = {
             },this);
 
         // ADDING THE SOUND HANDLER ON SPRITE
-        this.soundHandlerOnSprite = game.add.sprite(soundIconX + 6, soundIconY + 5.5, "imageGameSoundOn");
+        this.soundHandlerOnSprite = game.add.sprite(265 + 6, -37 + 5.5, "imageGameSoundOn");
 
         // ADDING THE SOUND HANDLER OFF BACKGROUND
         this.soundHandlerOffBackground = game.add.graphics();
         this.soundHandlerOffBackground.beginFill(0x383838, 1);
         this.soundHandlerOffBackground.lineStyle(2, 0x707070, 1);
-        this.soundHandlerOffBackground.drawRoundedRect(soundIconX, soundIconY, 38, 34, 10);
+        this.soundHandlerOffBackground.drawRoundedRect(265, -37, 38, 34, 10);
         this.soundHandlerOffBackground.inputEnabled = true;
         this.soundHandlerOffBackground.input.useHandCursor = true;
         this.soundHandlerOffBackground.events.onInputUp.add(function()
@@ -716,7 +713,7 @@ PacMan.Game.prototype = {
             },this);
 
         // ADDING THE SOUND HANDLER OFF SPRITE
-        this.soundHandlerOffSprite = game.add.sprite(soundIconX + 6, soundIconY + 5.5, "imageGameSoundOff");
+        this.soundHandlerOffSprite = game.add.sprite(265 + 6, -37 + 5.5, "imageGameSoundOff");
 
         // CHECKING IF THE SOUND IS ENABLED
         if (GAME_SOUND_ENABLED==true)
@@ -755,8 +752,13 @@ PacMan.Game.prototype = {
             // WAITING 500 MS
             game.time.events.add(500, function()
                 {
+                // SETTING THAT THE INTRO IS DONE
                 game.state.states["PacMan.Game"].introDone = true;
+
+                // STARTING THE PACMAN MUNCH ANIMATION
                 game.state.states["PacMan.Game"].pacman.play("munch");
+
+                // MOVING THE PACMAN TO THE LEFT
                 game.state.states["PacMan.Game"].move(Phaser.LEFT);
                 });
             }
@@ -765,8 +767,13 @@ PacMan.Game.prototype = {
             // WAITING 4500 MS
             game.time.events.add(4500, function()
                 {
+                // SETTING THAT THE INTRO IS DONE
                 game.state.states["PacMan.Game"].introDone = true;
+
+                // STARTING THE PACMAN MUNCH ANIMATION
                 game.state.states["PacMan.Game"].pacman.play("munch");
+
+                // MOVING THE PACMAN TO THE LEFT
                 game.state.states["PacMan.Game"].move(Phaser.LEFT);
                 });
              }
