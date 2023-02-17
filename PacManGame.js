@@ -718,8 +718,12 @@ PacMan.Game.prototype = {
             // SAVING THE SOUND PREFERENCE
             this.setBooleanSetting("GAME_SOUND_ENABLED", true);
 
-            // RESTORING THE VOLUME OF THE MUSIC PLAYER
-            MUSIC_PLAYER.volume = 1;
+            // CHECKING IF THERE IS A MUSIC PLAYER
+            if (MUSIC_PLAYER!=null)
+                {
+                // RESTORING THE VOLUME OF THE MUSIC PLAYER
+                MUSIC_PLAYER.volume = 1;
+                }
             },this);
 
         // ADDING THE SOUND HANDLER OFF SPRITE
