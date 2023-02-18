@@ -655,8 +655,10 @@ PacMan.Game.prototype = {
         // ADDING THE PILLS GROUP
         this.pills = this.add.physicsGroup();
 
-        // CREATING THE MAP
+        // ADDING AND REGISTERING THE DOTS
         this.map.createFromTiles(7, this.safetile, "imageGameDot", this.layer, this.dots);
+
+        // ADDING AND REGISTERING THE PILLS
         this.map.createFromTiles(35, this.safetile, "imageGamePill", this.layer, this.pills);
 
         // ADDING A 6PX OFFSET TO THE DOTS IN ORDER TO BE VERTICALLY AND HORIZONTALLY CENTERED
