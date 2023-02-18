@@ -21,7 +21,7 @@ var GAME_HEIGHT = 536;
 if (isMobileDevice()==true)
     {
     // INCREASING THE GAME HEIGHT IN ORDER TO ADD A VIRTUAL JOYSTICK
-    GAME_HEIGHT = 706;
+    GAME_HEIGHT = 756;
     }
 
 // GETTING THE USER LANGUAGE
@@ -824,20 +824,20 @@ PacMan.Game.prototype = {
         if (window.innerHeight>=1280)
             {
             // ADDING THE STICK FOR A BIG SIZE TABLET
-            this.stick = this.pad.addDPad(60, 651, 0, "dpad");
-            this.stick.sprite.scale.set(0.5);
+            this.stick = this.pad.addDPad(80, 676, 0, "dpad");
+            this.stick.sprite.scale.set(0.7);
             }
         else if (window.innerHeight>=830)
             {
             // ADDING THE STICK FOR A REGULAR SIZE TABLET
-            this.stick = this.pad.addDPad(75, 631, 0, "dpad");
-            this.stick.sprite.scale.set(0.6);
+            this.stick = this.pad.addDPad(95, 656, 0, "dpad");
+            this.stick.sprite.scale.set(0.8);
             }
         else
             {
             // ADDING THE STICK FOR A SMARTPHONE
-            this.stick = this.pad.addDPad(85, 621, 0, "dpad");
-            this.stick.sprite.scale.set(0.8);
+            this.stick = this.pad.addDPad(105, 646, 0, "dpad");
+            this.stick.sprite.scale.set(1);
             }
 
         // SETTING THE STYLES AND EVENTS RELATED TO THE STICK FOR MOBILE DEVICES
