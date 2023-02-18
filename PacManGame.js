@@ -1001,6 +1001,13 @@ PacMan.Game.prototype = {
 
         // UPDATING THE SCORE
         this.updateScore();
+
+        // CHECKING IF ALL THE PILLS WERE KILLED
+        if (this.pills.total == 0)
+            {
+            // REVIVING ALL THE PILLS
+            this.pills.callAll("revive");
+            }
         },
 
     update: function ()
