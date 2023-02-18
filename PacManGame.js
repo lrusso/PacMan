@@ -963,6 +963,9 @@ PacMan.Game.prototype = {
 
             // UPDATING THE HIGHSCORE WITH THE NEW VALUE
             this.highScoreValue.setText(this.score);
+
+            // CENTERING THE HIGHSCORE VALUE
+            this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
             }
 
         if (this.dots.total === 0)
