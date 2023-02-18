@@ -986,7 +986,7 @@ PacMan.Game.prototype = {
         // UPDATING THE SCORE
         this.updateScore();
 
-        // CHECKING IF ALL THE DOTS WERE KILLED
+        // CHECKING IF ALL THE DOTS WERE EATEN
         if (this.dots.total == 0)
             {
             // REVIVING ALL THE DOTS
@@ -1002,7 +1002,7 @@ PacMan.Game.prototype = {
         // UPDATING THE SCORE
         this.updateScore();
 
-        // CHECKING IF ALL THE PILLS WERE KILLED
+        // CHECKING IF ALL THE PILLS WERE EATEN
         if (this.pills.total == 0)
             {
             // REVIVING ALL THE PILLS
