@@ -823,35 +823,49 @@ PacMan.Game.prototype = {
 
     checkKeys: function ()
         {
+        // DETECTING THE KEYS
         var moveUp = (this.keyW.isDown || this.cursors.up.isDown == true) && this.cursors.down.isDown == false && this.cursors.left.isDown == false && this.cursors.right.isDown == false && this.keyS.isDown == false && this.keyA.isDown == false && this.keyD.isDown == false;
         var moveDown = (this.keyS.isDown || this.cursors.down.isDown == true) && this.cursors.up.isDown == false && this.cursors.left.isDown == false && this.cursors.right.isDown == false && this.keyW.isDown == false && this.keyA.isDown == false && this.keyD.isDown == false;
         var moveLeft = (this.keyA.isDown || this.cursors.left.isDown == true) && this.cursors.up.isDown == false && this.cursors.down.isDown == false && this.cursors.right.isDown == false && this.keyW.isDown == false && this.keyS.isDown == false && this.keyD.isDown == false;
         var moveRight = (this.keyD.isDown ||  this.cursors.right.isDown == true) && this.cursors.up.isDown == false && this.cursors.down.isDown == false && this.cursors.left.isDown == false && this.keyW.isDown == false && this.keyS.isDown == false && this.keyA.isDown == false;
 
+        // DETECTING THE CURRENT MOVEMENT
         var movingLeft = this.pacman.angle == 0 && this.pacman.scale.x == -1;
         var movingRight = this.pacman.angle == 0 && this.pacman.scale.x == 1;
         var movingUp = this.pacman.angle == -90 && this.pacman.scale.x == 1;
         var movingDown = this.pacman.angle == 90 && this.pacman.scale.x == 1;
 
+        // CHECKING IF A LEFT MOVEMENT MUST BE PERFORMED
         if (moveLeft==true && movingLeft==false)
             {
+            // MOVING PACMAN TO THE LEFT
             this.checkDirection(Phaser.LEFT);
             }
+
+        // CHECKING IF A RIGHT MOVEMENT MUST BE PERFORMED
         else if (moveRight==true && movingRight==false)
             {
+            // MOVING PACMAN TO THE RIGHT
             this.checkDirection(Phaser.RIGHT);
             }
+
+        // CHECKING IF A UP MOVEMENT MUST BE PERFORMED
         else if (moveUp==true && movingUp==false)
             {
+            // MOVING PACMAN TO THE TOP
             this.checkDirection(Phaser.UP);
             }
+
+        // CHECKING IF A DOWN MOVEMENT MUST BE PERFORMED
         else if (moveDown==true && movingDown==false)
             {
+            // MOVING PACMAN TO THE BOTTOM
             this.checkDirection(Phaser.DOWN);
             }
+
         else
             {
-            //  This forces them to hold the key down to turn the corner
+            // FORCING THE USER TO HOLD THE KEY DOWN TO TURN THE CORNER
             this.turning = Phaser.NONE;
             }
         },
