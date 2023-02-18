@@ -11,18 +11,10 @@ Phaser.VirtualJoystick=function(a,b){Phaser.Plugin.call(this,a,b),this.sticks=nu
 function isWebGLAvailable(){if(window.WebGLRenderingContext){for(var e=document.createElement("canvas"),t=["webgl2","webgl","experimental-webgl","moz-webgl","webkit-3d"],n=!1,r=0;r<t.length;r++)try{if((n=e.getContext(t[r]))&&"function"==typeof n.getParameter)return!0}catch(e){}return!1}return!1}
 
 // isMobileDevice.js
-function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
+function isMobileDevice(){return true;return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
 var MUSIC_PLAYER = null;
 var GAME_SOUND_ENABLED = true;
-var GAME_HEIGHT = 536;
-
-// CHECKING IF IT IS A MOBILE DEVICE
-if (isMobileDevice()==true)
-    {
-    // INCREASING THE GAME HEIGHT IN ORDER TO ADD A VIRTUAL JOYSTICK
-    GAME_HEIGHT = 756;
-    }
 
 // GETTING THE USER LANGUAGE
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
@@ -88,7 +80,7 @@ PacMan.Preloader.prototype = {
 
         // SCALING THE CANVAS SIZE FOR THE GAME
         var scaleX = window.innerWidth / 448;
-        var scaleY = window.innerHeight / GAME_HEIGHT;
+        var scaleY = window.innerHeight / 536;
         var scale = Math.min(scaleX, scaleY);
         this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
         this.scale.setUserScale(scale, scale);
@@ -297,7 +289,6 @@ PacMan.Disclaimer.prototype = {
             this.line9.height = 25;
             this.line9.tint = 0x228B22;
             this.line9.position.x = game.width / 2 - this.line9.width / 2;
-            this.line9.position.y = game.height - this.line9.height - 90;
             }
             else
             {
@@ -824,20 +815,20 @@ PacMan.Game.prototype = {
         if (window.innerHeight>=1280)
             {
             // ADDING THE STICK FOR A BIG SIZE TABLET
-            this.stick = this.pad.addDPad(80, 676, 0, "dpad");
-            this.stick.sprite.scale.set(0.7);
+            this.stick = this.pad.addDPad(60, 475, 0, "dpad");
+            this.stick.sprite.scale.set(0.5);
             }
         else if (window.innerHeight>=830)
             {
             // ADDING THE STICK FOR A REGULAR SIZE TABLET
-            this.stick = this.pad.addDPad(95, 656, 0, "dpad");
-            this.stick.sprite.scale.set(0.8);
+            this.stick = this.pad.addDPad(75, 455, 0, "dpad");
+            this.stick.sprite.scale.set(0.6);
             }
         else
             {
             // ADDING THE STICK FOR A SMARTPHONE
-            this.stick = this.pad.addDPad(105, 646, 0, "dpad");
-            this.stick.sprite.scale.set(1);
+            this.stick = this.pad.addDPad(85, 445, 0, "dpad");
+            this.stick.sprite.scale.set(0.8);
             }
 
         // SETTING THE STYLES AND EVENTS RELATED TO THE STICK FOR MOBILE DEVICES
@@ -1219,7 +1210,7 @@ if (isWebGLAvailable()==false)
     }
 
 // CREATING THE GAME INSTANCE
-var config = {width: 448, height: GAME_HEIGHT, renderer: rendererMode, parent: "content", disableVisibilityChange: false};
+var config = {width: 448, height: 536, renderer: rendererMode, parent: "content", disableVisibilityChange: false};
 var game = new Phaser.Game(config);
 
 // CREATING THE STATES
