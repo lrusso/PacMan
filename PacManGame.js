@@ -1005,10 +1005,16 @@ PacMan.Game.prototype = {
 
     update: function ()
         {
+        // IF THE INTRO IS NOT DONE, PREVENTING TO GO ANY FURTHER
         if (this.introDone==false){return}
 
+        // CHECKING AND COLLIDING TO THE MAP LAYER
         this.physics.arcade.collide(this.pacman, this.layer);
+
+        // CHECKING AND CALLING THE EATDOT FUNCTION IF PACMAN EATS A DOT
         this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+
+        // CHECKING AND CALLING THE EATPILL FUNCTION IF PACMAN EATS A PILL
         this.physics.arcade.overlap(this.pacman, this.pills, this.eatPill, null, this);
 
         this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
