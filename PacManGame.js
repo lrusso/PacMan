@@ -140,7 +140,7 @@ PacMan.Preloader.prototype = {
 
     create: function()
         {
-        this.state.start("PacMan.Game");
+        this.state.start("PacMan.Splash");
         }
     };
 
