@@ -984,24 +984,7 @@ PacMan.Game.prototype = {
         dot.kill();
 
         // UPDATING THE SCORE
-        this.score = this.score + 1;
-
-        // UPDATING THE SCORE LABEL
-        this.scoreValue.setText(this.score);
-        this.scoreValue.position.x = this.scoreLabel.position.x + this.scoreLabel.width / 2 - this.scoreValue.width / 2;
-
-        // CHECKING IF THE CURRENT SCORE HITS THE HIGH SCORE
-        if (this.score>this.getHighscore())
-            {
-            // SETTING THE NEW HIGHSCORE
-            this.setHighscore(this.score);
-
-            // UPDATING THE HIGHSCORE WITH THE NEW VALUE
-            this.highScoreValue.setText(this.score);
-
-            // CENTERING THE HIGHSCORE VALUE
-            this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
-            }
+        this.updateScore();
 
         // CHECKING IF ALL THE DOTS WERE KILLED
         if (this.dots.total == 0)
@@ -1011,13 +994,22 @@ PacMan.Game.prototype = {
             }
         },
 
+    eatPill: function(pacman, pill)
+        {
+        // KILLING THE PILL
+        pill.kill();
+
+        // UPDATING THE SCORE
+        this.updateScore();
+        },
+
     update: function ()
         {
         if (this.introDone==false){return}
 
         this.physics.arcade.collide(this.pacman, this.layer);
         this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-        this.physics.arcade.overlap(this.pacman, this.pills, this.eatDot, null, this);
+        this.physics.arcade.overlap(this.pacman, this.pills, this.eatPill, null, this);
 
         this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
         this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
@@ -1044,6 +1036,29 @@ PacMan.Game.prototype = {
         if (this.turning !== Phaser.NONE)
             {
             this.turn();
+            }
+        },
+
+    updateScore: function()
+        {
+        // UPDATING THE SCORE
+        this.score = this.score + 1;
+
+        // UPDATING THE SCORE LABEL
+        this.scoreValue.setText(this.score);
+        this.scoreValue.position.x = this.scoreLabel.position.x + this.scoreLabel.width / 2 - this.scoreValue.width / 2;
+
+        // CHECKING IF THE CURRENT SCORE HITS THE HIGH SCORE
+        if (this.score>this.getHighscore())
+            {
+            // SETTING THE NEW HIGHSCORE
+            this.setHighscore(this.score);
+
+            // UPDATING THE HIGHSCORE WITH THE NEW VALUE
+            this.highScoreValue.setText(this.score);
+
+            // CENTERING THE HIGHSCORE VALUE
+            this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
             }
         },
 
