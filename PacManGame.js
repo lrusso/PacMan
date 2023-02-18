@@ -15,6 +15,14 @@ function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||naviga
 
 var MUSIC_PLAYER = null;
 var GAME_SOUND_ENABLED = true;
+var GAME_HEIGHT = 536;
+
+// CHECKING IF IT IS A MOBILE DEVICE
+if (isMobileDevice()==true)
+    {
+    // INCREASING THE GAME HEIGHT IN ORDER TO ADD A VIRTUAL JOYSTICK
+    GAME_HEIGHT = 686;
+    }
 
 // GETTING THE USER LANGUAGE
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
@@ -80,7 +88,7 @@ PacMan.Preloader.prototype = {
 
         // SCALING THE CANVAS SIZE FOR THE GAME
         var scaleX = window.innerWidth / 448;
-        var scaleY = window.innerHeight / 536;
+        var scaleY = window.innerHeight / GAME_HEIGHT;
         var scale = Math.min(scaleX, scaleY);
         this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
         this.scale.setUserScale(scale, scale);
@@ -286,6 +294,7 @@ PacMan.Disclaimer.prototype = {
             this.line9.height = 25;
             this.line9.tint = 0x228B22;
             this.line9.position.x = game.width / 2 - this.line9.width / 2;
+            this.line9.position.y = game.height - this.line9.height - 90;
             }
             else
             {
@@ -379,6 +388,7 @@ PacMan.Menu.prototype = {
         // ADDING THE PLAY BUTTON
         this.menuPlayButton = game.add.button(0, 425, "imageMenuButton", null, this, 2, 1, 0);
         this.menuPlayButton.position.x = game.width / 2 - this.menuPlayButton.width - 20;
+        this.menuPlayButton.position.y = game.height - this.menuPlayButton.height - 50;
         this.menuPlayButton.onInputDown.add(function(){if(this.clickTimestamp==null){this.clickTimestamp=this.getCurrentTime();this.clickPositionX=this.game.input.activePointer.position.x;this.clickPositionY=this.game.input.activePointer.position.y;}},this);
         this.menuPlayButton.onInputUp.add(this.playGame, this);
 
@@ -391,6 +401,7 @@ PacMan.Menu.prototype = {
         // ADDING THE SOUND BUTTON
         this.menuSoundButton = game.add.button(0, 425, "imageMenuButton", null, this, 2, 1, 0);
         this.menuSoundButton.position.x = game.width / 2 + 20;
+        this.menuSoundButton.position.y = game.height - this.menuSoundButton.height - 50;
         this.menuSoundButton.onInputDown.add(function(){if(this.clickTimestamp==null){this.clickTimestamp=this.getCurrentTime();this.clickPositionX=this.game.input.activePointer.position.x;this.clickPositionY=this.game.input.activePointer.position.y;}},this);
         this.menuSoundButton.onInputUp.add(this.toggleSound, this);
 
@@ -1154,7 +1165,7 @@ if (isWebGLAvailable()==false)
     }
 
 // CREATING THE GAME INSTANCE
-var config = {width: 448, height: 536, renderer: rendererMode, parent: "content", disableVisibilityChange: false};
+var config = {width: 448, height: GAME_HEIGHT, renderer: rendererMode, parent: "content", disableVisibilityChange: false};
 var game = new Phaser.Game(config);
 
 // CREATING THE STATES
