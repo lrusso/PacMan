@@ -11,7 +11,7 @@ Phaser.VirtualJoystick=function(a,b){Phaser.Plugin.call(this,a,b),this.sticks=nu
 function isWebGLAvailable(){if(window.WebGLRenderingContext){for(var e=document.createElement("canvas"),t=["webgl2","webgl","experimental-webgl","moz-webgl","webkit-3d"],n=!1,r=0;r<t.length;r++)try{if((n=e.getContext(t[r]))&&"function"==typeof n.getParameter)return!0}catch(e){}return!1}return!1}
 
 // isMobileDevice.js
-function isMobileDevice(){return true;return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
+function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
 var MUSIC_PLAYER = null;
 var GAME_SOUND_ENABLED = true;
@@ -382,7 +382,6 @@ PacMan.Menu.prototype = {
         // ADDING THE PLAY BUTTON
         this.menuPlayButton = game.add.button(0, 425, "imageMenuButton", null, this, 2, 1, 0);
         this.menuPlayButton.position.x = game.width / 2 - this.menuPlayButton.width - 20;
-        this.menuPlayButton.position.y = game.height - this.menuPlayButton.height - 50;
         this.menuPlayButton.onInputDown.add(function(){if(this.clickTimestamp==null){this.clickTimestamp=this.getCurrentTime();this.clickPositionX=this.game.input.activePointer.position.x;this.clickPositionY=this.game.input.activePointer.position.y;}},this);
         this.menuPlayButton.onInputUp.add(this.playGame, this);
 
@@ -395,7 +394,6 @@ PacMan.Menu.prototype = {
         // ADDING THE SOUND BUTTON
         this.menuSoundButton = game.add.button(0, 425, "imageMenuButton", null, this, 2, 1, 0);
         this.menuSoundButton.position.x = game.width / 2 + 20;
-        this.menuSoundButton.position.y = game.height - this.menuSoundButton.height - 50;
         this.menuSoundButton.onInputDown.add(function(){if(this.clickTimestamp==null){this.clickTimestamp=this.getCurrentTime();this.clickPositionX=this.game.input.activePointer.position.x;this.clickPositionY=this.game.input.activePointer.position.y;}},this);
         this.menuSoundButton.onInputUp.add(this.toggleSound, this);
 
