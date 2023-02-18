@@ -948,10 +948,13 @@ PacMan.Game.prototype = {
 
     eatDot: function (pacman, dot)
         {
+        // KILLING THE DOT
         dot.kill();
 
+        // UPDATING THE SCORE
         this.score = this.score + 1;
 
+        // UPDATING THE SCORE LABEL
         this.scoreValue.setText(this.score);
         this.scoreValue.position.x = this.scoreLabel.position.x + this.scoreLabel.width / 2 - this.scoreValue.width / 2;
 
@@ -968,8 +971,10 @@ PacMan.Game.prototype = {
             this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
             }
 
-        if (this.dots.total === 0)
+        // CHECKING IF ALL THE DOTS WERE KILLED
+        if (this.dots.total == 0)
             {
+            // REVIVING ALL THE DOTS
             this.dots.callAll("revive");
             }
         },
