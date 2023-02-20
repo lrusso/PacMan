@@ -763,6 +763,10 @@ PacMan.Game.prototype = {
         this.physics.arcade.enable(this.inky);
         this.inky.body.setSize(16, 16, 0, 0);
         this.inky.movingTo = Phaser.LEFT;
+        this.inky.lastX = 0;
+        this.inky.lastXRepeated = 0;
+        this.inky.lastY = 0;
+        this.inky.lastYRepeated = 0;
 
         // ADDING PINKY
         this.pinky = this.add.sprite(250, 233, "imageGamePinky", 0);
@@ -771,6 +775,10 @@ PacMan.Game.prototype = {
         this.physics.arcade.enable(this.pinky);
         this.pinky.body.setSize(16, 16, 0, 0);
         this.pinky.movingTo = Phaser.RIGHT;
+        this.pinky.lastX = 0;
+        this.pinky.lastXRepeated = 0;
+        this.pinky.lastY = 0;
+        this.pinky.lastYRepeated = 0;
 
         // ADDING THE SCORE LABEL
         this.scoreLabel = game.add.bitmapText(10, -35, "ArialBlackWhite", STRING_SCORE, 16);
@@ -1153,10 +1161,14 @@ PacMan.Game.prototype = {
         this.physics.arcade.collide(this.pacman, this.layer);
         this.physics.arcade.collide(this.blinky, this.layer);
         this.physics.arcade.collide(this.clyde, this.layer);
+        this.physics.arcade.collide(this.inky, this.layer);
+        this.physics.arcade.collide(this.pinky, this.layer);
 
         // HANDLING THE ENEMY BEHAVIOR
         this.handleEnemy(this.blinky);
         this.handleEnemy(this.clyde);
+        this.handleEnemy(this.inky);
+        this.handleEnemy(this.pinky);
 
         // CHECKING AND CALLING THE EATDOT FUNCTION IF PACMAN EATS A DOT
         this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
