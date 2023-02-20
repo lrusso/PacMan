@@ -731,12 +731,17 @@ PacMan.Game.prototype = {
         this.pacman.body.setSize(16, 16, 0, 0);
 
         // ADDING BLINKY
-        this.blinky = this.add.sprite(104, 135, "imageGameBlinky", 0);
+        this.blinky = this.add.sprite(104, 136, "imageGameBlinky", 0);
         this.blinky.anchor.set(0.5);
         this.blinky.scale.x = -1;
         this.blinky.frame = 1;
         this.physics.arcade.enable(this.blinky);
         this.blinky.body.setSize(16, 16, 0, 0);
+        this.blinky.movingTo = Phaser.LEFT;
+        this.blinky.lastX = 0;
+        this.blinky.lastXRepeated = 0;
+        this.blinky.lastY = 0;
+        this.blinky.lastYRepeated = 0;
 
         // ADDING CLYDE
         this.clyde = this.add.sprite(344, 87, "imageGameClyde", 0);
@@ -744,6 +749,11 @@ PacMan.Game.prototype = {
         this.clyde.frame = 1;
         this.physics.arcade.enable(this.clyde);
         this.clyde.body.setSize(16, 16, 0, 0);
+        this.clyde.movingTo = Phaser.RIGHT;
+        this.clyde.lastX = 0;
+        this.clyde.lastXRepeated = 0;
+        this.clyde.lastY = 0;
+        this.clyde.lastYRepeated = 0;
 
         // ADDING INKY
         this.inky = this.add.sprite(200, 233, "imageGameInky", 0);
@@ -752,6 +762,7 @@ PacMan.Game.prototype = {
         this.inky.frame = 1;
         this.physics.arcade.enable(this.inky);
         this.inky.body.setSize(16, 16, 0, 0);
+        this.inky.movingTo = Phaser.LEFT;
 
         // ADDING PINKY
         this.pinky = this.add.sprite(250, 233, "imageGamePinky", 0);
@@ -759,6 +770,7 @@ PacMan.Game.prototype = {
         this.pinky.frame = 1;
         this.physics.arcade.enable(this.pinky);
         this.pinky.body.setSize(16, 16, 0, 0);
+        this.pinky.movingTo = Phaser.RIGHT;
 
         // ADDING THE SCORE LABEL
         this.scoreLabel = game.add.bitmapText(10, -35, "ArialBlackWhite", STRING_SCORE, 16);
@@ -1077,7 +1089,7 @@ PacMan.Game.prototype = {
             }
             else
             {
-              this.pacman.body.velocity.y = speed;
+            this.pacman.body.velocity.y = speed;
             }
 
         //  Reset the scale and angle (Pacman is facing to the right in the sprite sheet)
@@ -1137,8 +1149,14 @@ PacMan.Game.prototype = {
         // IF THE INTRO IS NOT DONE, PREVENTING TO GO ANY FURTHER
         if (this.introDone==false){return}
 
-        // CHECKING AND COLLIDING TO THE MAP LAYER
+        // CHECKING AND COLLIDING PLAYER AND ENEMIES WITH THE MAP LAYER
         this.physics.arcade.collide(this.pacman, this.layer);
+        this.physics.arcade.collide(this.blinky, this.layer);
+        this.physics.arcade.collide(this.clyde, this.layer);
+
+        // HANDLING THE ENEMY BEHAVIOR
+        this.handleEnemy(this.blinky);
+        this.handleEnemy(this.clyde);
 
         // CHECKING AND CALLING THE EATDOT FUNCTION IF PACMAN EATS A DOT
         this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
@@ -1195,6 +1213,83 @@ PacMan.Game.prototype = {
             // CENTERING THE HIGHSCORE VALUE
             this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
             }
+        },
+
+    handleEnemy: function(enemy)
+        {
+        if (enemy.movingTo==Phaser.LEFT)
+            {
+            enemy.body.velocity.x = -this.speed;
+            enemy.body.velocity.y = 0;
+            enemy.scale.x = -1;
+
+            if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>4)
+                {
+                enemy.lastX = 0;
+                enemy.lastXRepeated = 0;
+                enemy.lastY = 0;
+                enemy.lastYRepeated = 0;
+                enemy.movingTo = Phaser.UP;
+                return;
+                }
+            }
+        else if (enemy.movingTo==Phaser.UP)
+            {
+            enemy.body.velocity.x = 0;
+            enemy.body.velocity.y = -this.speed;
+
+            if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>4)
+                {
+                enemy.lastX = 0;
+                enemy.lastXRepeated = 0;
+                enemy.lastY = 0;
+                enemy.lastYRepeated = 0;
+                enemy.movingTo = Phaser.RIGHT;
+                return;
+                }
+            }
+        else if (enemy.movingTo==Phaser.RIGHT)
+            {
+            enemy.body.velocity.x = this.speed;
+            enemy.body.velocity.y = 0;
+            enemy.scale.x = 1;
+
+            if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>4)
+                {
+                enemy.lastXRepeated = 0;
+                enemy.lastYRepeated = 0;
+                enemy.movingTo = Phaser.DOWN;
+                return;
+                }
+            }
+        else if (enemy.movingTo==Phaser.DOWN)
+            {
+            enemy.body.velocity.x = 0;
+            enemy.body.velocity.y = this.speed;
+
+            if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>4)
+                {
+                enemy.lastX = 0;
+                enemy.lastXRepeated = 0;
+                enemy.lastY = 0;
+                enemy.lastYRepeated = 0;
+                enemy.movingTo = Phaser.LEFT;
+                return;
+                }
+            }
+
+        if (enemy.lastX==enemy.position.x)
+            {
+            enemy.lastXRepeated = enemy.lastXRepeated + 1;
+            }
+
+        if (enemy.lastY==enemy.position.y)
+            {
+            enemy.lastYRepeated = enemy.lastYRepeated + 1;
+            }
+
+        enemy.lastX = enemy.position.x;
+        enemy.lastY = enemy.position.y;
         },
 
     setBooleanSetting: function(settingName, settingValue)
