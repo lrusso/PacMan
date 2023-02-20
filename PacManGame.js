@@ -14,7 +14,7 @@ function isWebGLAvailable(){if(window.WebGLRenderingContext){for(var e=document.
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
 var MUSIC_PLAYER = null;
-var GAME_SOUND_ENABLED = true;
+var GAME_SOUND_ENABLED = false;
 
 // GETTING THE USER LANGUAGE
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
@@ -189,6 +189,7 @@ PacMan.Splash.prototype = {
         // SETTING THE BACKGROUND COLOR
         this.stage.backgroundColor = "#FFFFFF";
 
+        // ADDING THE FIRST PART OF THE LOGO
         this.imageLogoPart1 = game.add.sprite(0, 0, "imageLogoPart1");
         this.imageLogoPart1.scale.x = 0.7;
         this.imageLogoPart1.scale.y = 0.7;
@@ -196,7 +197,7 @@ PacMan.Splash.prototype = {
         this.imageLogoPart1.position.y = game.height / 2 - this.imageLogoPart1.height / 2 - logoOffset;
         this.imageLogoPart1.alpha = 0;
 
-        // ADDING THE LOGO
+        // ADDING THE SECOND PART OF THE LOGO
         this.imageLogoPart2 = game.add.sprite(0, 0, "imageLogoPart2");
         this.imageLogoPart2.scale.x = 0.7;
         this.imageLogoPart2.scale.y = 0.7;
@@ -604,6 +605,11 @@ PacMan.Game = function (game)
     this.pad = null;
     this.stick = null;
 
+    this.blinky = null;
+    this.clyde = null;
+    this.inky = null;
+    this.pinky = null;
+
     // SCALING THE CANVAS SIZE FOR THE GAME
     function resizeF()
         {
@@ -668,6 +674,11 @@ PacMan.Game.prototype = {
 
         this.pad = null;
         this.stick = null;
+
+        this.blinky = null;
+        this.clyde = null;
+        this.inky = null;
+        this.pinky = null;
         },
 
     create: function ()
@@ -718,6 +729,36 @@ PacMan.Game.prototype = {
         this.pacman.frame = 1;
         this.physics.arcade.enable(this.pacman);
         this.pacman.body.setSize(16, 16, 0, 0);
+
+        // ADDING BLINKY
+        this.blinky = this.add.sprite(104, 135, "imageGameBlinky", 0);
+        this.blinky.anchor.set(0.5);
+        this.blinky.scale.x = -1;
+        this.blinky.frame = 1;
+        this.physics.arcade.enable(this.blinky);
+        this.blinky.body.setSize(16, 16, 0, 0);
+
+        // ADDING CLYDE
+        this.clyde = this.add.sprite(344, 87, "imageGameClyde", 0);
+        this.clyde.anchor.set(0.5);
+        this.clyde.frame = 1;
+        this.physics.arcade.enable(this.clyde);
+        this.clyde.body.setSize(16, 16, 0, 0);
+
+        // ADDING INKY
+        this.inky = this.add.sprite(200, 233, "imageGameInky", 0);
+        this.inky.anchor.set(0.5);
+        this.inky.scale.x = -1;
+        this.inky.frame = 1;
+        this.physics.arcade.enable(this.inky);
+        this.inky.body.setSize(16, 16, 0, 0);
+
+        // ADDING PINKY
+        this.pinky = this.add.sprite(250, 233, "imageGamePinky", 0);
+        this.pinky.anchor.set(0.5);
+        this.pinky.frame = 1;
+        this.physics.arcade.enable(this.pinky);
+        this.pinky.body.setSize(16, 16, 0, 0);
 
         // ADDING THE SCORE LABEL
         this.scoreLabel = game.add.bitmapText(10, -35, "ArialBlackWhite", STRING_SCORE, 16);
