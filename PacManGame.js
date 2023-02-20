@@ -591,6 +591,21 @@ PacMan.Game = function (game)
 
     this.pad = null;
     this.stick = null;
+
+    // SCALING THE CANVAS SIZE FOR THE GAME
+    function resizeF()
+        {
+        var scaleX = window.innerWidth / 448;
+        var scaleY = window.innerHeight / 536;
+        var scale = Math.min(scaleX, scaleY);
+        game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+        game.scale.setUserScale(scale, scale);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        game.scale.refresh();
+        }
+
+    window.addEventListener("resize", resizeF);
     };
 
 PacMan.Game.prototype = {
