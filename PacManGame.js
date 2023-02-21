@@ -1363,11 +1363,11 @@ PacMan.Game.prototype = {
             this.pills.callAll("revive");
             }
 
-        // TURNING ALL THE REGULAR ENEMIES TO SCARED ENEMIES
-        this.blinky.loadTexture("imageGameScared");
-        this.clyde.loadTexture("imageGameScared");
-        this.inky.loadTexture("imageGameScared");
-        this.pinky.loadTexture("imageGameScared");
+        // TURNING ALL THE REGULAR ENEMIES TO SCARED ENEMIES IF IS NOT A GHOST
+        if (this.blinky.key!="imageGameGhost"){this.blinky.loadTexture("imageGameScared");}
+        if (this.clyde.key!="imageGameGhost"){this.clyde.loadTexture("imageGameScared");}
+        if (this.inky.key!="imageGameGhost"){this.inky.loadTexture("imageGameScared");}
+        if (this.pinky.key!="imageGameGhost"){this.pinky.loadTexture("imageGameScared");}
 
         // WAITING 10000 MS
         game.time.events.add(10000, function()
