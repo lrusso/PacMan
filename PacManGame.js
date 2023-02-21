@@ -628,6 +628,7 @@ PacMan.Game = function (game)
     this.block3 = null;
     this.block4 = null;
     this.block5 = null;
+    this.block6 = null;
 
     this.pillEvent = null;
 
@@ -705,6 +706,7 @@ PacMan.Game.prototype = {
         this.block3 = null;
         this.block4 = null;
         this.block5 = null;
+        this.block6 = null;
 
         this.pillEvent = null;
         },
@@ -842,6 +844,11 @@ PacMan.Game.prototype = {
         this.block5.height = 64;
         game.physics.arcade.enable(this.block5);
         this.block5.body.immovable = true;
+
+        // ADDING THE DOOR TO THE BOX
+        this.block6 = game.add.graphics(0, 0);
+        this.block6.beginFill(0xFFFFFF, 1);
+        this.block6.drawRect(208, 200, 32, 8);
 
         // ADDING THE THREE LIFES INDICATOR
         this.life1 = this.add.sprite(340, -36, "imageGamePacman", 0);
@@ -1228,7 +1235,7 @@ PacMan.Game.prototype = {
         // CHECKING IF A UP MOVEMENT MUST BE PERFORMED
         else if ((moveUp==true || joystickUp==true) && movingUp==false)
             {
-            // MOVING PACMAN TO THE TOP
+            // MOVING PACMAN UP
             this.checkDirection(Phaser.UP);
             }
 
@@ -1243,7 +1250,7 @@ PacMan.Game.prototype = {
                 }
             else
                 {
-                // MOVING PACMAN TO THE BOTTOM
+                // MOVING PACMAN DOWN
                 this.checkDirection(Phaser.DOWN);
                 }
             }
