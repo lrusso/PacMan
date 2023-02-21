@@ -1231,78 +1231,122 @@ PacMan.Game.prototype = {
         {
         function getNewRandomDirection(currentDirection)
             {
+            // GETTING ALL THE AVAILABLE DIRECTIONS
             var availableDirections = [Phaser.LEFT, Phaser.RIGHT, Phaser.UP, Phaser.DOWN];
+
+            // GETTING A NEW RANDOM DIRECTION
             var newDirection = availableDirections[Math.floor(Math.random() * availableDirections.length)];
 
+            // LOOPING IN ORDER TO HAVE A NEW DIRECTION DIFFERENT TO THE CURRENT ONE
             while(newDirection==currentDirection)
                 {
+                // GETTING A NEW RANDOM DIRECTION
                 newDirection = availableDirections[Math.floor(Math.random() * availableDirections.length)];
                 }
 
+            // RESTORING THE ENEMY POSITION VALUES
             enemy.lastX = 0;
             enemy.lastXRepeated = 0;
             enemy.lastY = 0;
             enemy.lastYRepeated = 0;
+
+            // SETTING THE NEW ENEMY DIRECTION
             enemy.currentDirection = newDirection;
             }
 
+        // CHECKING IF THE ENEMY IS MOVING TO THE LEFT
         if (enemy.currentDirection==Phaser.LEFT)
             {
+            // SETTING THAT THE ENEMY WILL BE MOVING TO THE LEFT
             enemy.body.velocity.x = -this.speed;
             enemy.body.velocity.y = 0;
+
+            // MAKING THE ENEMY TO LOOK TO THE LEFT
             enemy.scale.x = -1;
 
+            // CHECKING IF THE ENEMY CANNOT MOVE ANY FURTHER TO THE LEFT
             if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>2)
                 {
+                // GETTING A NEW RANDOM DIRECTION
                 getNewRandomDirection(enemy.currentDirection);
+
+                // NO POINT GOING ANY FURTHER
                 return;
                 }
             }
+
+        // CHECKING IF THE ENEMY IS MOVING UP
         else if (enemy.currentDirection==Phaser.UP)
             {
+            // SETTING THAT THE ENEMY WILL BE MOVING UP
             enemy.body.velocity.x = 0;
             enemy.body.velocity.y = -this.speed;
 
+            // CHECKING IF THE ENEMY CANNOT MOVE UP ANY FURTHER
             if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>2)
                 {
+                // GETTING A NEW RANDOM DIRECTION
                 getNewRandomDirection(enemy.currentDirection);
+
+                // NO POINT GOING ANY FURTHER
                 return;
                 }
             }
+
+        // CHECKING IF THE ENEMY IS MOVING TO THE RIGHT
         else if (enemy.currentDirection==Phaser.RIGHT)
             {
+            // SETTING THAT THE ENEMY WILL BE MOVING TO THE RIGHT
             enemy.body.velocity.x = this.speed;
             enemy.body.velocity.y = 0;
+
+            // MAKING THE ENEMY TO LOOK TO THE RIGHT
             enemy.scale.x = 1;
 
+            // CHECKING IF THE ENEMY CANNOT MOVE ANY FURTHER TO THE RIGHT
             if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>2)
                 {
+                // GETTING A NEW RANDOM DIRECTION
                 getNewRandomDirection(enemy.currentDirection);
+
+                // NO POINT GOING ANY FURTHER
                 return;
                 }
             }
+
+        // CHECKING IF THE ENEMY IS MOVING DOWN
         else if (enemy.currentDirection==Phaser.DOWN)
             {
+            // SETTING THAT THE ENEMY WILL BE MOVING DOWN
             enemy.body.velocity.x = 0;
             enemy.body.velocity.y = this.speed;
 
+            // CHECKING IF THE ENEMY CANNOT MOVE DOWN ANY FURTHER
             if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>2)
                 {
+                // GETTING A NEW RANDOM DIRECTION
                 getNewRandomDirection(enemy.currentDirection);
+
+                // NO POINT GOING ANY FURTHER
                 return;
                 }
             }
 
+        // CHECKING IF ENEMY X POSITION HASN'T CHANGED
         if (enemy.lastX==enemy.position.x)
             {
+            // UPDATING THE LAST X REPEATED COUNTER
             enemy.lastXRepeated = enemy.lastXRepeated + 1;
             }
 
+        // CHECKING IF ENEMY Y POSITION HASN'T CHANGED
         if (enemy.lastY==enemy.position.y)
             {
+            // UPDATING THE LAST Y REPEATED COUNTER
             enemy.lastYRepeated = enemy.lastYRepeated + 1;
             }
 
+        // UPDATING THE LAST ENEMY POSITION
         enemy.lastX = enemy.position.x;
         enemy.lastY = enemy.position.y;
         },
