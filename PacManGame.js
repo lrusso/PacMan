@@ -959,8 +959,8 @@ PacMan.Game.prototype = {
         this.keyD = game.input.keyboard.addKey(Phaser.Keyboard.D);
         this.keyW = game.input.keyboard.addKey(Phaser.Keyboard.W);
 
-        // CHECKING IF THE SOUND IS ENABLED
-        if (GAME_SOUND_ENABLED==false)
+        // CHECKING IF THE SOUND IS ENABLED OR IF THE PLAYER LOST A LIFE
+        if (GAME_SOUND_ENABLED==false || GAME_LIFES < 3)
             {
             // WAITING 500 MS
             game.time.events.add(500, function()
