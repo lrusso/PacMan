@@ -737,7 +737,7 @@ PacMan.Game.prototype = {
         this.blinky.frame = 1;
         this.physics.arcade.enable(this.blinky);
         this.blinky.body.setSize(16, 16, 0, 0);
-        this.blinky.movingTo = Phaser.LEFT;
+        this.blinky.currentDirection = Phaser.LEFT;
         this.blinky.lastX = 0;
         this.blinky.lastXRepeated = 0;
         this.blinky.lastY = 0;
@@ -749,7 +749,7 @@ PacMan.Game.prototype = {
         this.clyde.frame = 1;
         this.physics.arcade.enable(this.clyde);
         this.clyde.body.setSize(16, 16, 0, 0);
-        this.clyde.movingTo = Phaser.RIGHT;
+        this.clyde.currentDirection = Phaser.RIGHT;
         this.clyde.lastX = 0;
         this.clyde.lastXRepeated = 0;
         this.clyde.lastY = 0;
@@ -762,7 +762,7 @@ PacMan.Game.prototype = {
         this.inky.frame = 1;
         this.physics.arcade.enable(this.inky);
         this.inky.body.setSize(16, 16, 0, 0);
-        this.inky.movingTo = Phaser.LEFT;
+        this.inky.currentDirection = Phaser.LEFT;
         this.inky.lastX = 0;
         this.inky.lastXRepeated = 0;
         this.inky.lastY = 0;
@@ -774,7 +774,7 @@ PacMan.Game.prototype = {
         this.pinky.frame = 1;
         this.physics.arcade.enable(this.pinky);
         this.pinky.body.setSize(16, 16, 0, 0);
-        this.pinky.movingTo = Phaser.RIGHT;
+        this.pinky.currentDirection = Phaser.RIGHT;
         this.pinky.lastX = 0;
         this.pinky.lastXRepeated = 0;
         this.pinky.lastY = 0;
@@ -1229,63 +1229,66 @@ PacMan.Game.prototype = {
 
     handleEnemy: function(enemy)
         {
-        if (enemy.movingTo==Phaser.LEFT)
+        function getNewRandomDirection(currentDirection)
+            {
+            var availableDirections = [Phaser.LEFT, Phaser.RIGHT, Phaser.UP, Phaser.DOWN];
+            var newDirection = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+
+            while(newDirection==currentDirection)
+                {
+                newDirection = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+                }
+
+            enemy.lastX = 0;
+            enemy.lastXRepeated = 0;
+            enemy.lastY = 0;
+            enemy.lastYRepeated = 0;
+            enemy.currentDirection = newDirection;
+            }
+
+        if (enemy.currentDirection==Phaser.LEFT)
             {
             enemy.body.velocity.x = -this.speed;
             enemy.body.velocity.y = 0;
             enemy.scale.x = -1;
 
-            if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>4)
+            if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>2)
                 {
-                enemy.lastX = 0;
-                enemy.lastXRepeated = 0;
-                enemy.lastY = 0;
-                enemy.lastYRepeated = 0;
-                enemy.movingTo = Phaser.UP;
+                getNewRandomDirection(enemy.currentDirection);
                 return;
                 }
             }
-        else if (enemy.movingTo==Phaser.UP)
+        else if (enemy.currentDirection==Phaser.UP)
             {
             enemy.body.velocity.x = 0;
             enemy.body.velocity.y = -this.speed;
 
-            if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>4)
+            if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>2)
                 {
-                enemy.lastX = 0;
-                enemy.lastXRepeated = 0;
-                enemy.lastY = 0;
-                enemy.lastYRepeated = 0;
-                enemy.movingTo = Phaser.RIGHT;
+                getNewRandomDirection(enemy.currentDirection);
                 return;
                 }
             }
-        else if (enemy.movingTo==Phaser.RIGHT)
+        else if (enemy.currentDirection==Phaser.RIGHT)
             {
             enemy.body.velocity.x = this.speed;
             enemy.body.velocity.y = 0;
             enemy.scale.x = 1;
 
-            if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>4)
+            if (enemy.lastX == enemy.position.x && enemy.lastXRepeated>2)
                 {
-                enemy.lastXRepeated = 0;
-                enemy.lastYRepeated = 0;
-                enemy.movingTo = Phaser.DOWN;
+                getNewRandomDirection(enemy.currentDirection);
                 return;
                 }
             }
-        else if (enemy.movingTo==Phaser.DOWN)
+        else if (enemy.currentDirection==Phaser.DOWN)
             {
             enemy.body.velocity.x = 0;
             enemy.body.velocity.y = this.speed;
 
-            if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>4)
+            if (enemy.lastY == enemy.position.y && enemy.lastYRepeated>2)
                 {
-                enemy.lastX = 0;
-                enemy.lastXRepeated = 0;
-                enemy.lastY = 0;
-                enemy.lastYRepeated = 0;
-                enemy.movingTo = Phaser.LEFT;
+                getNewRandomDirection(enemy.currentDirection);
                 return;
                 }
             }
