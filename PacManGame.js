@@ -1235,8 +1235,17 @@ PacMan.Game.prototype = {
         // CHECKING IF A DOWN MOVEMENT MUST BE PERFORMED
         else if ((moveDown==true || joystickDown==true) && movingDown==false)
             {
-            // MOVING PACMAN TO THE BOTTOM
-            this.checkDirection(Phaser.DOWN);
+            // CHECKING IF PACMAN CAN ENTER THE MIDDLE BOX
+            if (this.pacman.position.x > 200 && this.pacman.position.x < 240 && this.pacman.position.y>180 && this.pacman.position.y<190)
+                {
+                // PREVENTING THE EVENT
+                return
+                }
+            else
+                {
+                // MOVING PACMAN TO THE BOTTOM
+                this.checkDirection(Phaser.DOWN);
+                }
             }
 
         else
