@@ -1294,6 +1294,7 @@ PacMan.Game.prototype = {
         // SHRINKING THE PACMAN SPRITE IN 500 MS
         game.add.tween(game.state.states["PacMan.Game"].pacman).to({width: 0}, 500, Phaser.Easing.Linear.None, true);
         game.add.tween(game.state.states["PacMan.Game"].pacman).to({height: 0}, 500, Phaser.Easing.Linear.None, true);
+        game.add.tween(game.state.states["PacMan.Game"].pacman).to({angle: -360}, 500, Phaser.Easing.Linear.None, true);
 
         // WAITING 500 MS
         game.time.events.add(500, function()
