@@ -629,6 +629,8 @@ PacMan.Game = function (game)
     this.block4 = null;
     this.block5 = null;
 
+    this.pillEvent = null;
+
     // SCALING THE CANVAS SIZE FOR THE GAME
     function resizeF()
         {
@@ -703,6 +705,8 @@ PacMan.Game.prototype = {
         this.block3 = null;
         this.block4 = null;
         this.block5 = null;
+
+        this.pillEvent = null;
         },
 
     create: function ()
@@ -1369,8 +1373,15 @@ PacMan.Game.prototype = {
         if (this.inky.key!="imageGameGhost"){this.inky.loadTexture("imageGameScared");}
         if (this.pinky.key!="imageGameGhost"){this.pinky.loadTexture("imageGameScared");}
 
-        // WAITING 10000 MS
-        game.time.events.add(10000, function()
+        // CHECKING IF THERE IS A PENDING PILL EVENT TO BE OVER
+        if (this.pillEvent!=null)
+            {
+            // REMOVING THE PENDING PILL EVENT TO BE OVER
+            game.time.events.remove(this.pillEvent);
+            }
+
+        // WAITING 10000 MS FOR THE PILL EFFECT TO BE OVER
+        this.pillEvent = game.time.events.add(10000, function()
             {
             // TURNING ALL THE SCARED ENEMIES TO REGULAR ENEMIES IF THEY AREN'T GHOSTS
             if (game.state.states["PacMan.Game"].blinky.key!="imageGameGhost"){game.state.states["PacMan.Game"].blinky.loadTexture("imageGameBlinky");}
