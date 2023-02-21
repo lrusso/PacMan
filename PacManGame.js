@@ -1363,7 +1363,7 @@ PacMan.Game.prototype = {
             this.pills.callAll("revive");
             }
 
-        // TURNING ALL THE REGULAR ENEMIES TO SCARED ENEMIES IF IS NOT A GHOST
+        // TURNING ALL THE REGULAR ENEMIES TO SCARED ENEMIES IF THEY AREN'T GHOSTS
         if (this.blinky.key!="imageGameGhost"){this.blinky.loadTexture("imageGameScared");}
         if (this.clyde.key!="imageGameGhost"){this.clyde.loadTexture("imageGameScared");}
         if (this.inky.key!="imageGameGhost"){this.inky.loadTexture("imageGameScared");}
@@ -1372,11 +1372,11 @@ PacMan.Game.prototype = {
         // WAITING 10000 MS
         game.time.events.add(10000, function()
             {
-            // TURNING ALL THE SCARED ENEMIES TO REGULAR ENEMIES
-            game.state.states["PacMan.Game"].blinky.loadTexture("imageGameBlinky");
-            game.state.states["PacMan.Game"].clyde.loadTexture("imageGameClyde");
-            game.state.states["PacMan.Game"].inky.loadTexture("imageGameInky");
-            game.state.states["PacMan.Game"].pinky.loadTexture("imageGamePinky");
+            // TURNING ALL THE SCARED ENEMIES TO REGULAR ENEMIES IF THEY AREN'T GHOSTS
+            if (game.state.states["PacMan.Game"].blinky.key!="imageGameGhost"){game.state.states["PacMan.Game"].blinky.loadTexture("imageGameBlinky");}
+            if (game.state.states["PacMan.Game"].clyde.key!="imageGameGhost"){game.state.states["PacMan.Game"].clyde.loadTexture("imageGameClyde");}
+            if (game.state.states["PacMan.Game"].inky.key!="imageGameGhost"){game.state.states["PacMan.Game"].inky.loadTexture("imageGameInky");}
+            if (game.state.states["PacMan.Game"].pinky.key!="imageGameGhost"){game.state.states["PacMan.Game"].pinky.loadTexture("imageGamePinky");}
             });
         },
 
