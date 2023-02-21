@@ -19,6 +19,14 @@ var WAKA_SOUND_PLAYER = null;
 var GAME_SOUND_ENABLED = true;
 var GAME_LIFES = 3;
 var GAME_SCORE = 0;
+var GAME_HEIGHT = 536;
+
+// CHECKING IF IT IS A MOBILE DEVICE
+if (isMobileDevice()==true)
+    {
+    // INCREASING THE GAME HEIGHT
+    GAME_HEIGHT = 850;
+    }
 
 // GETTING THE USER LANGUAGE
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
@@ -87,7 +95,7 @@ PacMan.Preloader.prototype = {
 
         // SCALING THE CANVAS SIZE FOR THE GAME
         var scaleX = window.innerWidth / 448;
-        var scaleY = window.innerHeight / 536;
+        var scaleY = window.innerHeight / GAME_HEIGHT;
         var scale = Math.min(scaleX, scaleY);
         this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
         this.scale.setUserScale(scale, scale);
@@ -208,6 +216,11 @@ PacMan.Splash.prototype = {
         // SETTING THE LOGO OFFSET
         var logoOffset = 20;
 
+        if (isMobileDevice()==true)
+            {
+            logoOffset = 25;
+            }
+
         // SETTING THE BACKGROUND COLOR
         this.stage.backgroundColor = "#FFFFFF";
 
@@ -215,6 +228,11 @@ PacMan.Splash.prototype = {
         this.imageLogoPart1 = game.add.sprite(0, 0, "imageLogoPart1");
         this.imageLogoPart1.scale.x = 0.7;
         this.imageLogoPart1.scale.y = 0.7;
+        if (isMobileDevice()==true)
+            {
+            this.imageLogoPart1.scale.x = 0.9;
+            this.imageLogoPart1.scale.y = 0.9;
+            }
         this.imageLogoPart1.position.x = game.width / 2 - this.imageLogoPart1.width / 2;
         this.imageLogoPart1.position.y = game.height / 2 - this.imageLogoPart1.height / 2 - logoOffset;
         this.imageLogoPart1.alpha = 0;
@@ -223,6 +241,11 @@ PacMan.Splash.prototype = {
         this.imageLogoPart2 = game.add.sprite(0, 0, "imageLogoPart2");
         this.imageLogoPart2.scale.x = 0.7;
         this.imageLogoPart2.scale.y = 0.7;
+        if (isMobileDevice()==true)
+            {
+            this.imageLogoPart2.scale.x = 0.9;
+            this.imageLogoPart2.scale.y = 0.9;
+            }
         this.imageLogoPart2.position.x = game.width / 2 - this.imageLogoPart2.width / 2;
         this.imageLogoPart2.position.y = -this.imageLogoPart2.height + 75;
 
@@ -320,7 +343,7 @@ PacMan.Disclaimer.prototype = {
         if (isMobileDevice()==true)
             {
             // ADDING THE DISCLAIMER LINE 8 FOR MOBILE DEVICES
-            this.line9 = game.add.bitmapText(0, this.marginY + 400, "ArialBlackWhite", STRING_DISCLAIMER9_MOBILE, 20);
+            this.line9 = game.add.bitmapText(0, this.marginY + 650, "ArialBlackWhite", STRING_DISCLAIMER9_MOBILE, 20);
             this.line9.height = 25;
             this.line9.tint = 0x228B22;
             this.line9.position.x = game.width / 2 - this.line9.width / 2;
@@ -418,6 +441,7 @@ PacMan.Menu.prototype = {
         // ADDING THE PLAY BUTTON
         this.menuPlayButton = game.add.button(0, 425, "imageMenuButton", null, this, 2, 1, 0);
         this.menuPlayButton.position.x = game.width / 2 - this.menuPlayButton.width - 20;
+        this.menuPlayButton.position.y = game.height - game.height * 0.20;
         this.menuPlayButton.onInputDown.add(function(){if(this.clickTimestamp==null){this.clickTimestamp=this.getCurrentTime();this.clickPositionX=this.game.input.activePointer.position.x;this.clickPositionY=this.game.input.activePointer.position.y;}},this);
         this.menuPlayButton.onInputUp.add(this.playGame, this);
 
@@ -430,6 +454,7 @@ PacMan.Menu.prototype = {
         // ADDING THE SOUND BUTTON
         this.menuSoundButton = game.add.button(0, 425, "imageMenuButton", null, this, 2, 1, 0);
         this.menuSoundButton.position.x = game.width / 2 + 20;
+        this.menuSoundButton.position.y = game.height - game.height * 0.20;
         this.menuSoundButton.onInputDown.add(function(){if(this.clickTimestamp==null){this.clickTimestamp=this.getCurrentTime();this.clickPositionX=this.game.input.activePointer.position.x;this.clickPositionY=this.game.input.activePointer.position.y;}},this);
         this.menuSoundButton.onInputUp.add(this.toggleSound, this);
 
@@ -646,7 +671,7 @@ PacMan.Game = function (game)
     function resizeF()
         {
         var scaleX = window.innerWidth / 448;
-        var scaleY = window.innerHeight / 536;
+        var scaleY = window.innerHeight / GAME_HEIGHT;
         var scale = Math.min(scaleX, scaleY);
         game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
         game.scale.setUserScale(scale, scale);
@@ -726,8 +751,17 @@ PacMan.Game.prototype = {
         // SETTING THE BACKGROUND COLOR
         this.stage.backgroundColor = "#000000";
 
-        // MOVING THE WORLD 40PX UP
-        game.world.setBounds(0, -40, 0, 0);
+        // CHECKING IF IT IS A MOBILE DEVICE
+        if (isMobileDevice()==true)
+            {
+            // MOVING THE WORLD 60PX UP
+            game.world.setBounds(0, -60, 0, 0);
+            }
+        else
+            {
+            // MOVING THE WORLD 40PX UP
+            game.world.setBounds(0, -40, 0, 0);
+            }
 
         // ADDING THE MAP
         this.map = this.add.tilemap("map");
@@ -1026,20 +1060,20 @@ PacMan.Game.prototype = {
         if (window.innerHeight>=1280)
             {
             // ADDING THE STICK FOR A BIG SIZE TABLET
-            this.stick = this.pad.addDPad(60, 475, 0, "dpad");
-            this.stick.sprite.scale.set(0.5);
+            this.stick = this.pad.addDPad(90, 731, 0, "dpad");
+            this.stick.sprite.scale.set(0.9);
             }
         else if (window.innerHeight>=830)
             {
             // ADDING THE STICK FOR A REGULAR SIZE TABLET
-            this.stick = this.pad.addDPad(75, 455, 0, "dpad");
-            this.stick.sprite.scale.set(0.6);
+            this.stick = this.pad.addDPad(105, 711, 0, "dpad");
+            this.stick.sprite.scale.set(1);
             }
         else
             {
             // ADDING THE STICK FOR A SMARTPHONE
-            this.stick = this.pad.addDPad(85, 445, 0, "dpad");
-            this.stick.sprite.scale.set(0.8);
+            this.stick = this.pad.addDPad(115, 701, 0, "dpad");
+            this.stick.sprite.scale.set(1.2);
             }
 
         // SETTING THE STYLES AND EVENTS RELATED TO THE STICK FOR MOBILE DEVICES
@@ -1954,7 +1988,7 @@ if (isWebGLAvailable()==false)
     }
 
 // CREATING THE GAME INSTANCE
-var config = {width: 448, height: 536, renderer: rendererMode, parent: "content", disableVisibilityChange: false};
+var config = {width: 448, height: GAME_HEIGHT, renderer: rendererMode, parent: "content", disableVisibilityChange: false};
 var game = new Phaser.Game(config);
 
 // CREATING THE STATES
