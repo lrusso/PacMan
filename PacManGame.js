@@ -975,6 +975,58 @@ PacMan.Game.prototype = {
              }
         },
 
+    update: function ()
+        {
+        // IF THE INTRO IS NOT DONE, PREVENTING TO GO ANY FURTHER
+        if (this.introDone==false){return}
+
+        // CHECKING AND COLLIDING PLAYER AND ENEMIES WITH THE MAP LAYER
+        this.physics.arcade.collide(this.pacman, this.layer);
+        this.physics.arcade.collide(this.blinky, this.layer);
+        this.physics.arcade.collide(this.clyde, this.layer);
+        this.physics.arcade.collide(this.inky, this.layer);
+        this.physics.arcade.collide(this.pinky, this.layer);
+
+        // HANDLING THE ENEMY BEHAVIOR
+        this.handleEnemy(this.blinky);
+        this.handleEnemy(this.clyde);
+        this.handleEnemy(this.inky);
+        this.handleEnemy(this.pinky);
+
+        // CHECKING AND CALLING THE EATDOT FUNCTION IF PACMAN EATS A DOT
+        this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
+
+        // CHECKING AND CALLING THE EATPILL FUNCTION IF PACMAN EATS A PILL
+        this.physics.arcade.overlap(this.pacman, this.pills, this.eatPill, null, this);
+
+        this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
+        this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
+
+        //  Update our grid sensors
+        this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
+        this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
+        this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
+        this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
+
+        this.checkKeys();
+
+        if (this.pacman.position.x<0 && this.pacman.scale.x == -1)
+            {
+            this.pacman.position.x = game.width - this.pacman.width;
+            return;
+            }
+        else if (this.pacman.position.x>game.width && this.pacman.scale.x > -1)
+            {
+            this.pacman.position.x = -this.pacman.width;
+            return;
+            }
+
+        if (this.turning !== Phaser.NONE)
+            {
+            this.turn();
+            }
+        },
+
     checkKeys: function ()
         {
         // DETECTING THE KEYS
@@ -1149,58 +1201,6 @@ PacMan.Game.prototype = {
             {
             // REVIVING ALL THE PILLS
             this.pills.callAll("revive");
-            }
-        },
-
-    update: function ()
-        {
-        // IF THE INTRO IS NOT DONE, PREVENTING TO GO ANY FURTHER
-        if (this.introDone==false){return}
-
-        // CHECKING AND COLLIDING PLAYER AND ENEMIES WITH THE MAP LAYER
-        this.physics.arcade.collide(this.pacman, this.layer);
-        this.physics.arcade.collide(this.blinky, this.layer);
-        this.physics.arcade.collide(this.clyde, this.layer);
-        this.physics.arcade.collide(this.inky, this.layer);
-        this.physics.arcade.collide(this.pinky, this.layer);
-
-        // HANDLING THE ENEMY BEHAVIOR
-        this.handleEnemy(this.blinky);
-        this.handleEnemy(this.clyde);
-        this.handleEnemy(this.inky);
-        this.handleEnemy(this.pinky);
-
-        // CHECKING AND CALLING THE EATDOT FUNCTION IF PACMAN EATS A DOT
-        this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
-
-        // CHECKING AND CALLING THE EATPILL FUNCTION IF PACMAN EATS A PILL
-        this.physics.arcade.overlap(this.pacman, this.pills, this.eatPill, null, this);
-
-        this.marker.x = this.math.snapToFloor(Math.floor(this.pacman.x), this.gridsize) / this.gridsize;
-        this.marker.y = this.math.snapToFloor(Math.floor(this.pacman.y), this.gridsize) / this.gridsize;
-
-        //  Update our grid sensors
-        this.directions[1] = this.map.getTileLeft(this.layer.index, this.marker.x, this.marker.y);
-        this.directions[2] = this.map.getTileRight(this.layer.index, this.marker.x, this.marker.y);
-        this.directions[3] = this.map.getTileAbove(this.layer.index, this.marker.x, this.marker.y);
-        this.directions[4] = this.map.getTileBelow(this.layer.index, this.marker.x, this.marker.y);
-
-        this.checkKeys();
-
-        if (this.pacman.position.x<0 && this.pacman.scale.x == -1)
-            {
-            this.pacman.position.x = game.width - this.pacman.width;
-            return;
-            }
-        else if (this.pacman.position.x>game.width && this.pacman.scale.x > -1)
-            {
-            this.pacman.position.x = -this.pacman.width;
-            return;
-            }
-
-        if (this.turning !== Phaser.NONE)
-            {
-            this.turn();
             }
         },
 
