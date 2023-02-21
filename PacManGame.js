@@ -1499,14 +1499,15 @@ PacMan.Game.prototype = {
         {
         // CREATING THE TOAST SHADOW
         this.toastShadow = game.add.graphics();
-        this.toastShadow.beginFill(0x2121DE, 0.95);
+        this.toastShadow.beginFill(0x022C5C, 0.95);
+        this.toastShadow.lineStyle(2, 0x0046A9, 1);
         this.toastShadow.alpha = 0;
 
         // CREATING THE TOAST TEXT
-        this.toastText = game.add.bitmapText(0, 0, "ArialBlackShadow", myText, 30.5);
-        this.toastText.height = 34.5;
+        this.toastText = game.add.bitmapText(0, 0, "ArialBlackShadow", myText, 25.5);
+        this.toastText.height = 29.5;
         this.toastText.position.x = game.width / 2 - this.toastText.width / 2;
-        this.toastText.position.y = game.height - this.toastText.height - 68.5;
+        this.toastText.position.y = game.height - this.toastText.height - 72;
         this.toastText.alpha = 0;
 
         // DRAWING THE TOAST SHADOW
