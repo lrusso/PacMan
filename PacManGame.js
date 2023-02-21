@@ -1408,6 +1408,52 @@ PacMan.Game.prototype = {
 
             // LOADING THE SCARED ENEMY TEXTURE
             enemy.loadTexture("imageGameGhost");
+
+            // CHECKING IF THE ENEMY DIED ON THE FIRST HALF OF THE SCREEN
+            if (enemy.position.x<game.width/2)
+                {
+                // MOVING THE GHOST TO THE BOX AT THE CENTER OF THE SCREEN
+                game.add.tween(enemy).to({x: 200}, 1000, Phaser.Easing.Linear.None, true);
+                game.add.tween(enemy).to({y: 233}, 1000, Phaser.Easing.Linear.None, true);
+                }
+            else
+                {
+                // MOVING THE GHOST TO THE BOX AT THE CENTER OF THE SCREEN
+                game.add.tween(enemy).to({x: 250}, 1000, Phaser.Easing.Linear.None, true);
+                game.add.tween(enemy).to({y: 233}, 1000, Phaser.Easing.Linear.None, true);
+                }
+
+            // WAITING 1100 MS
+            game.time.events.add(1100, function()
+                {
+                // CHECKING IF THE ENEMY IS THE BLINKY GHOST
+                if (enemy==game.state.states["PacMan.Game"].blinky)
+                    {
+                    // CONVERTING THE BLINKY GHOST TO BLINKY
+                    game.state.states["PacMan.Game"].blinky.loadTexture("imageGameBlinky");
+                    }
+
+                // CHECKING IF THE ENEMY IS THE CLYDE GHOST
+                else if (enemy==game.state.states["PacMan.Game"].clyde)
+                    {
+                    // CONVERTING THE CLYDE GHOST TO CLYDE
+                    game.state.states["PacMan.Game"].clyde.loadTexture("imageGameClyde");
+                    }
+
+                // CHECKING IF THE ENEMY IS THE INKY GHOST
+                else if (enemy==game.state.states["PacMan.Game"].inky)
+                    {
+                    // CONVERTING THE INKY GHOST TO INKY
+                    game.state.states["PacMan.Game"].inky.loadTexture("imageGameInky");
+                    }
+
+                // CHECKING IF THE ENEMY IS THE PINKY GHOST
+                else if (enemy==game.state.states["PacMan.Game"].pinky)
+                    {
+                    // CONVERTING THE PINKY GHOST TO PINKY
+                    game.state.states["PacMan.Game"].pinky.loadTexture("imageGamePinky");
+                    }
+                });
             }
 
         // CHECKING IF THE PLAYER HITS A REGULAR ENEMY
@@ -1524,6 +1570,9 @@ PacMan.Game.prototype = {
 
     handleEnemy: function(enemy)
         {
+        // CHECKING IF THE ENEMY IS A GHOST AND PREVENTING TO GO ANY FURTHER IF THAT'S THE CASE
+        if (enemy.key=="imageGameGhost"){return}
+
         function getNewRandomDirection(currentDirection)
             {
             // GETTING ALL THE AVAILABLE DIRECTIONS
