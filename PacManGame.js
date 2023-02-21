@@ -15,6 +15,8 @@ function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||naviga
 
 var MUSIC_PLAYER = null;
 var GAME_SOUND_ENABLED = true;
+var GAME_LIFES = 3;
+var GAME_SCORE = 0;
 
 // GETTING THE USER LANGUAGE
 var userLanguage = window.navigator.userLanguage || window.navigator.language;
@@ -566,8 +568,6 @@ PacMan.Game = function (game)
     this.pills = null;
     this.pacman = null;
 
-    this.score = null;
-
     this.safetile = null;
     this.gridsize = null;
 
@@ -636,8 +636,6 @@ PacMan.Game.prototype = {
         this.dots = null;
         this.pills = null;
         this.pacman = null;
-
-        this.score = 0;
 
         this.safetile = 14;
         this.gridsize = 16;
@@ -782,11 +780,36 @@ PacMan.Game.prototype = {
         this.physics.arcade.enable(this.pacman);
         this.pacman.body.setSize(16, 16, 0, 0);
 
+        // ADDING THE THREE LIFES INDICATOR
+        this.life1 = this.add.sprite(340, -36, "imageGamePacman", 0);
+        this.life1.frame = 1;
+        this.life2 = this.add.sprite(375, -36, "imageGamePacman", 0);
+        this.life2.frame = 1;
+        this.life3 = this.add.sprite(410, -36, "imageGamePacman", 0);
+        this.life3.frame = 1;
+
+        // CHECKING IF THE PLAYER LOST THE THREE LIFES
+        if (GAME_LIFES==0)
+            {
+            // RESTORING THE LIFE COUNTER
+            GAME_LIFES = 3;
+
+            // RESETTING THE SCORE
+            GAME_SCORE = 0;
+            }
+            else
+            {
+            // CHECKING THE LIFE COUNTER AND HIDING THE LOST LIFES (IF ANY)
+            if (GAME_LIFES<=2) {this.life3.visible = false;}
+            if (GAME_LIFES<=1) {this.life2.visible = false;}
+            if (GAME_LIFES==0) {this.life1.visible = false;}
+            }
+
         // ADDING THE SCORE LABEL
         this.scoreLabel = game.add.bitmapText(10, -35, "ArialBlackWhite", STRING_SCORE, 16);
 
         // ADDING THE SCORE VALUE
-        this.scoreValue = game.add.bitmapText(0, -18, "ArialBlackWhite", "0", 16);
+        this.scoreValue = game.add.bitmapText(0, -18, "ArialBlackWhite", GAME_SCORE + "", 16);
         this.scoreValue.position.x = this.scoreLabel.position.x + this.scoreLabel.width / 2 - this.scoreValue.width / 2;
 
         // ADDING THE HIGHSCORE LABEL
@@ -797,14 +820,6 @@ PacMan.Game.prototype = {
         this.highScoreValue = game.add.bitmapText(0, -18, "ArialBlackWhite", this.getHighscore(), 16);
         this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
         this.highScoreValue.tint = 0XE6E600;
-
-        // ADDING THE THREE LIFES INDICATOR
-        this.life1 = this.add.sprite(340, -36, "imageGamePacman", 0);
-        this.life1.frame = 1;
-        this.life2 = this.add.sprite(375, -36, "imageGamePacman", 0);
-        this.life2.frame = 1;
-        this.life3 = this.add.sprite(410, -36, "imageGamePacman", 0);
-        this.life3.frame = 1;
 
         // ADDING THE SOUND HANDLER ON BACKGROUND
         this.soundHandlerOnBackground = game.add.graphics();
@@ -1088,7 +1103,7 @@ PacMan.Game.prototype = {
 
         else
             {
-            // FORCING THE USER TO HOLD THE KEY DOWN TO TURN THE CORNER
+            // FORCING THE PLAYER TO HOLD THE KEY DOWN TO TURN THE CORNER
             this.turning = Phaser.NONE;
             }
         },
@@ -1249,6 +1264,9 @@ PacMan.Game.prototype = {
 
     restartGame: function()
         {
+        // UPDATING THE LIFE COUNTER
+        GAME_LIFES = GAME_LIFES -1;
+
         // REMOVING THE JOYSTICK
         this.stick.destroy();
 
@@ -1270,20 +1288,20 @@ PacMan.Game.prototype = {
     updateScore: function()
         {
         // UPDATING THE SCORE
-        this.score = this.score + 1;
+        GAME_SCORE = GAME_SCORE + 1;
 
         // UPDATING THE SCORE LABEL
-        this.scoreValue.setText(this.score);
+        this.scoreValue.setText(GAME_SCORE + "");
         this.scoreValue.position.x = this.scoreLabel.position.x + this.scoreLabel.width / 2 - this.scoreValue.width / 2;
 
         // CHECKING IF THE CURRENT SCORE HITS THE HIGH SCORE
-        if (this.score>this.getHighscore())
+        if (GAME_SCORE>this.getHighscore())
             {
             // SETTING THE NEW HIGHSCORE
-            this.setHighscore(this.score);
+            this.setHighscore(GAME_SCORE);
 
             // UPDATING THE HIGHSCORE WITH THE NEW VALUE
-            this.highScoreValue.setText(this.score);
+            this.highScoreValue.setText(GAME_SCORE + "");
 
             // CENTERING THE HIGHSCORE VALUE
             this.highScoreValue.position.x = this.highScoreLabel.position.x + this.highScoreLabel.width / 2 - this.highScoreValue.width / 2;
