@@ -1338,7 +1338,7 @@ PacMan.Game.prototype = {
         dot.kill();
 
         // UPDATING THE SCORE
-        this.updateScore();
+        this.updateScore(false);
 
         // CHECKING IF ALL THE DOTS WERE EATEN
         if (this.dots.total == 0)
@@ -1354,7 +1354,7 @@ PacMan.Game.prototype = {
         pill.kill();
 
         // UPDATING THE SCORE
-        this.updateScore();
+        this.updateScore(false);
 
         // CHECKING IF ALL THE PILLS WERE EATEN
         if (this.pills.total == 0)
@@ -1382,35 +1382,56 @@ PacMan.Game.prototype = {
 
     eatPacman: function(pacman, enemy)
         {
-        // SETTING THAT PACMAN LOST A LIFE
-        this.lifeLost = true;
-
-        // STOPPING ALL THE SPRITES
-        this.pacman.body.velocity.x = 0;
-        this.pacman.body.velocity.y = 0;
-        this.blinky.body.velocity.x = 0;
-        this.blinky.body.velocity.y = 0;
-        this.clyde.body.velocity.x = 0;
-        this.clyde.body.velocity.y = 0;
-        this.inky.body.velocity.x = 0;
-        this.inky.body.velocity.y = 0;
-        this.pinky.body.velocity.x = 0;
-        this.pinky.body.velocity.y = 0;
-
-        // STOPPING THE PACMAN ANIMATION
-        this.pacman.animations.stop();
-
-        // SHRINKING THE PACMAN SPRITE IN 500 MS
-        game.add.tween(game.state.states["PacMan.Game"].pacman).to({width: 0}, 500, Phaser.Easing.Linear.None, true);
-        game.add.tween(game.state.states["PacMan.Game"].pacman).to({height: 0}, 500, Phaser.Easing.Linear.None, true);
-        game.add.tween(game.state.states["PacMan.Game"].pacman).to({angle: -360}, 500, Phaser.Easing.Linear.None, true);
-
-        // WAITING 500 MS
-        game.time.events.add(500, function()
+        // CHECKING IF THE PLAYER HITS A GHOST
+        if (enemy.key=="imageGameGhost")
             {
-            // RESTARTING THE GAME
-            game.state.states["PacMan.Game"].restartGame();
-            });
+            // NO POINT GOING ANY FURTHER
+            return;
+            }
+
+        // CHECKING IF THE PLAYER HITS A SCARED ENEMY
+        else if(enemy.key=="imageGameScared")
+            {
+            // UPDATING THE SCORE
+            this.updateScore(true);
+
+            // LOADING THE SCARED ENEMY TEXTURE
+            enemy.loadTexture("imageGameGhost");
+            }
+
+        // CHECKING IF THE PLAYER HITS A REGULAR ENEMY
+        else
+            {
+            // SETTING THAT PACMAN LOST A LIFE
+            this.lifeLost = true;
+
+            // STOPPING ALL THE SPRITES
+            this.pacman.body.velocity.x = 0;
+            this.pacman.body.velocity.y = 0;
+            this.blinky.body.velocity.x = 0;
+            this.blinky.body.velocity.y = 0;
+            this.clyde.body.velocity.x = 0;
+            this.clyde.body.velocity.y = 0;
+            this.inky.body.velocity.x = 0;
+            this.inky.body.velocity.y = 0;
+            this.pinky.body.velocity.x = 0;
+            this.pinky.body.velocity.y = 0;
+
+            // STOPPING THE PACMAN ANIMATION
+            this.pacman.animations.stop();
+
+            // SHRINKING THE PACMAN SPRITE IN 500 MS
+            game.add.tween(game.state.states["PacMan.Game"].pacman).to({width: 0}, 500, Phaser.Easing.Linear.None, true);
+            game.add.tween(game.state.states["PacMan.Game"].pacman).to({height: 0}, 500, Phaser.Easing.Linear.None, true);
+            game.add.tween(game.state.states["PacMan.Game"].pacman).to({angle: -360}, 500, Phaser.Easing.Linear.None, true);
+
+            // WAITING 500 MS
+            game.time.events.add(500, function()
+                {
+                // RESTARTING THE GAME
+                game.state.states["PacMan.Game"].restartGame();
+                });
+            }
         },
 
     restartGame: function()
@@ -1458,10 +1479,19 @@ PacMan.Game.prototype = {
             }
         },
 
-    updateScore: function()
+    updateScore: function(killedEnemy)
         {
-        // UPDATING THE SCORE
-        GAME_SCORE = GAME_SCORE + 1;
+        // CHECKING IF THE PLAYER KILLED AN ENEMY
+        if (killedEnemy==true)
+            {
+            // UPDATING THE SCORE
+            GAME_SCORE = GAME_SCORE + 5;
+            }
+        else
+            {
+            // UPDATING THE SCORE
+            GAME_SCORE = GAME_SCORE + 1;
+            }
 
         // UPDATING THE SCORE LABEL
         this.scoreValue.setText(GAME_SCORE + "");
