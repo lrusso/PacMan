@@ -1065,12 +1065,22 @@ PacMan.Game.prototype = {
 
     render: function ()
         {
+        // CHECKING IF THE GAME IS RUNNING IN DEBUG MODE
         if(PacMan.showDebug==true)
             {
+            // SHOWING THE BLOCK 1 COLLISION BODY SIZE
             game.debug.body(this.block1);
+
+            // SHOWING THE BLOCK 2 COLLISION BODY SIZE
             game.debug.body(this.block2);
+
+            // SHOWING THE BLOCK 3 COLLISION BODY SIZE
             game.debug.body(this.block3);
+
+            // SHOWING THE BLOCK 4 COLLISION BODY SIZE
             game.debug.body(this.block4);
+
+            // SHOWING THE BLOCK 5 COLLISION BODY SIZE
             game.debug.body(this.block5);
             }
         },
@@ -1115,7 +1125,7 @@ PacMan.Game.prototype = {
         this.handleEnemy(this.inky);
         this.handleEnemy(this.pinky);
 
-
+        // PREVENTING THE ENEMIES TO WALK OVER THE BORDERS OF THE MIDDLE BOX
         this.physics.arcade.collide(this.blinky, this.block1);
         this.physics.arcade.collide(this.blinky, this.block2);
         this.physics.arcade.collide(this.blinky, this.block3);
