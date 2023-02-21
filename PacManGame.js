@@ -589,6 +589,7 @@ PacMan.Game = function (game)
     this.keyW = null;
 
     this.introDone = null;
+    this.lifeLost = null;
 
     this.scoreLabel = null;
     this.scoreValue = null;
@@ -659,6 +660,7 @@ PacMan.Game.prototype = {
         this.keyW = null;
 
         this.introDone = false;
+        this.lifeLost = false;
 
         this.scoreLabel = null;
         this.scoreValue = null;
@@ -721,15 +723,6 @@ PacMan.Game.prototype = {
         // SETTING THAT PACMAN WON'T COLLIDE WITH THE SAFETILE
         this.map.setCollisionByExclusion([this.safetile], true, this.layer);
 
-        // ADDING PACMAN AT THE GRID LOCATION 14x17 (+8 ACCOUNTS FOR HIS ANCHOR)
-        this.pacman = this.add.sprite((14 * 16), (17 * 16) + 8, "imageGamePacman", 0);
-        this.pacman.anchor.set(0.5);
-        this.pacman.animations.add("munch", [0, 1, 2, 1], 12, true);
-        this.pacman.scale.x = -1;
-        this.pacman.frame = 1;
-        this.physics.arcade.enable(this.pacman);
-        this.pacman.body.setSize(16, 16, 0, 0);
-
         // ADDING BLINKY
         this.blinky = this.add.sprite(104, 136, "imageGameBlinky", 0);
         this.blinky.anchor.set(0.5);
@@ -779,6 +772,15 @@ PacMan.Game.prototype = {
         this.pinky.lastXRepeated = 0;
         this.pinky.lastY = 0;
         this.pinky.lastYRepeated = 0;
+
+        // ADDING PACMAN AT THE GRID LOCATION 14x17 (+8 ACCOUNTS FOR HIS ANCHOR)
+        this.pacman = this.add.sprite((14 * 16), (17 * 16) + 8, "imageGamePacman", 0);
+        this.pacman.anchor.set(0.5);
+        this.pacman.animations.add("munch", [0, 1, 2, 1], 12, true);
+        this.pacman.scale.x = -1;
+        this.pacman.frame = 1;
+        this.physics.arcade.enable(this.pacman);
+        this.pacman.body.setSize(16, 16, 0, 0);
 
         // ADDING THE SCORE LABEL
         this.scoreLabel = game.add.bitmapText(10, -35, "ArialBlackWhite", STRING_SCORE, 16);
@@ -980,6 +982,9 @@ PacMan.Game.prototype = {
         // IF THE INTRO IS NOT DONE, PREVENTING TO GO ANY FURTHER
         if (this.introDone==false){return}
 
+        // IF THE LIFE WAS LOST, PREVENTING TO GO ANY FURTHER
+        if (this.lifeLost==true){return}
+
         // CHECKING AND COLLIDING PLAYER AND ENEMIES WITH THE MAP LAYER
         this.physics.arcade.collide(this.pacman, this.layer);
         this.physics.arcade.collide(this.blinky, this.layer);
@@ -992,6 +997,12 @@ PacMan.Game.prototype = {
         this.handleEnemy(this.clyde);
         this.handleEnemy(this.inky);
         this.handleEnemy(this.pinky);
+
+        // CHECKING AND CALLING THE EATPACMAN FUNCTION IF PACMAN HITS A ENEMY
+        this.physics.arcade.overlap(this.pacman, this.blinky, this.eatPacman, null, this);
+        this.physics.arcade.overlap(this.pacman, this.clyde, this.eatPacman, null, this);
+        this.physics.arcade.overlap(this.pacman, this.inky, this.eatPacman, null, this);
+        this.physics.arcade.overlap(this.pacman, this.pinky, this.eatPacman, null, this);
 
         // CHECKING AND CALLING THE EATDOT FUNCTION IF PACMAN EATS A DOT
         this.physics.arcade.overlap(this.pacman, this.dots, this.eatDot, null, this);
@@ -1202,6 +1213,58 @@ PacMan.Game.prototype = {
             // REVIVING ALL THE PILLS
             this.pills.callAll("revive");
             }
+        },
+
+    eatPacman: function(pacman, enemy)
+        {
+        // SETTING THAT PACMAN LOST A LIFE
+        this.lifeLost = true;
+
+        // STOPPING ALL THE SPRITES
+        this.pacman.body.velocity.x = 0;
+        this.pacman.body.velocity.y = 0;
+        this.blinky.body.velocity.x = 0;
+        this.blinky.body.velocity.y = 0;
+        this.clyde.body.velocity.x = 0;
+        this.clyde.body.velocity.y = 0;
+        this.inky.body.velocity.x = 0;
+        this.inky.body.velocity.y = 0;
+        this.pinky.body.velocity.x = 0;
+        this.pinky.body.velocity.y = 0;
+
+        // STOPPING THE PACMAN ANIMATION
+        this.pacman.animations.stop();
+
+        // SHRINKING THE PACMAN SPRITE IN 500 MS
+        game.add.tween(game.state.states["PacMan.Game"].pacman).to({width: 0}, 500, Phaser.Easing.Linear.None, true);
+        game.add.tween(game.state.states["PacMan.Game"].pacman).to({height: 0}, 500, Phaser.Easing.Linear.None, true);
+
+        // WAITING 500 MS
+        game.time.events.add(500, function()
+            {
+            // RESTARTING THE GAME
+            game.state.states["PacMan.Game"].restartGame();
+            });
+        },
+
+    restartGame: function()
+        {
+        // REMOVING THE JOYSTICK
+        this.stick.destroy();
+
+        // CHECKING IF THE SOUND IS ENABLED
+        if (GAME_SOUND_ENABLED==true)
+            {
+            // CHECKING IF THE AUDIO PLAYER IS CREATED
+            if(this.audioPlayer!=null)
+                {
+                // DESTROYING THE AUDIO PLAYER
+                this.audioPlayer.destroy();
+                }
+            }
+
+        // RESTARTING THE GAME
+        this.state.restart();
         },
 
     updateScore: function()
