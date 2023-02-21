@@ -1362,6 +1362,22 @@ PacMan.Game.prototype = {
             // REVIVING ALL THE PILLS
             this.pills.callAll("revive");
             }
+
+        // TURNING ALL THE REGULAR ENEMIES TO SCARED ENEMIES
+        this.blinky.loadTexture("imageGameScared");
+        this.clyde.loadTexture("imageGameScared");
+        this.inky.loadTexture("imageGameScared");
+        this.pinky.loadTexture("imageGameScared");
+
+        // WAITING 10000 MS
+        game.time.events.add(10000, function()
+            {
+            // TURNING ALL THE SCARED ENEMIES TO REGULAR ENEMIES
+            game.state.states["PacMan.Game"].blinky.loadTexture("imageGameBlinky");
+            game.state.states["PacMan.Game"].clyde.loadTexture("imageGameClyde");
+            game.state.states["PacMan.Game"].inky.loadTexture("imageGameInky");
+            game.state.states["PacMan.Game"].pinky.loadTexture("imageGamePinky");
+            });
         },
 
     eatPacman: function(pacman, enemy)
