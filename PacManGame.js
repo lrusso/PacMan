@@ -1573,6 +1573,26 @@ PacMan.Game.prototype = {
         // CHECKING IF THE ENEMY IS A GHOST AND PREVENTING TO GO ANY FURTHER IF THAT'S THE CASE
         if (enemy.key=="imageGameGhost"){return}
 
+        // CHECKING IF THE ENEMY IS IN THE BOX AND IS NEXT TO THE DOOR
+        if (enemy.position.x > 220 && enemy.position.x < 226 && enemy.position.y > 200 && enemy.position.y<233)
+            {
+            // RESTORING THE ENEMY POSITION VALUES
+            enemy.lastX = 0;
+            enemy.lastXRepeated = 0;
+            enemy.lastY = 0;
+            enemy.lastYRepeated = 0;
+
+            // SETTING THE NEW ENEMY DIRECTION
+            enemy.currentDirection = Phaser.UP;
+
+            // MAKING THE ENEMY TO MOVE UP
+            enemy.body.velocity.x = 0;
+            enemy.body.velocity.y = -this.speed;
+
+            // NO POINT GOING ANY FURTHER
+            return;
+            }
+
         function getNewRandomDirection(currentDirection)
             {
             // GETTING ALL THE AVAILABLE DIRECTIONS
