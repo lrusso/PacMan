@@ -811,34 +811,34 @@ PacMan.Game.prototype = {
         // ADDING THE FIRST BLOCK
         this.block1 = game.add.sprite(168, 200, "imageGameBlock");
         this.block1.width = 40;
-        this.block1.height = 14;
+        this.block1.height = 16;
         game.physics.arcade.enable(this.block1);
         this.block1.body.immovable = true;
 
         // ADDING THE SECOND BLOCK
         this.block2 = game.add.sprite(240, 200, "imageGameBlock");
         this.block2.width = 40;
-        this.block2.height = 14;
+        this.block2.height = 16;
         game.physics.arcade.enable(this.block2);
         this.block2.body.immovable = true;
 
         // ADDING THE THIRD BLOCK
         this.block3 = game.add.sprite(168, 200, "imageGameBlock");
-        this.block3.width = 14;
+        this.block3.width = 16;
         this.block3.height = 64;
         game.physics.arcade.enable(this.block3);
         this.block3.body.immovable = true;
 
         // ADDING THE FOURTH BLOCK
-        this.block4 = game.add.sprite(168, 250, "imageGameBlock");
+        this.block4 = game.add.sprite(168, 248, "imageGameBlock");
         this.block4.width = 112;
-        this.block4.height = 14;
+        this.block4.height = 16;
         game.physics.arcade.enable(this.block4);
         this.block4.body.immovable = true;
 
         // ADDING THE FIFTH BLOCK
-        this.block5 = game.add.sprite(266, 200, "imageGameBlock");
-        this.block5.width = 14;
+        this.block5 = game.add.sprite(264, 200, "imageGameBlock");
+        this.block5.width = 16;
         this.block5.height = 64;
         game.physics.arcade.enable(this.block5);
         this.block5.body.immovable = true;
