@@ -216,8 +216,10 @@ PacMan.Splash.prototype = {
         // SETTING THE LOGO OFFSET
         var logoOffset = 20;
 
+        // CHECKING IF IT IS A MOBILE DEVICE
         if (isMobileDevice()==true)
             {
+            // ADJUSTING THE LOGO OFFSET
             logoOffset = 25;
             }
 
