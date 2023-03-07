@@ -1563,14 +1563,16 @@ PacMan.Game.prototype = {
             // CHECKING IF THE ENEMY DIED ON THE FIRST HALF OF THE SCREEN
             if (enemy.position.x<game.width/2)
                 {
+                // SETTING THAT THE ENEMY WILL BE MOVING TO THE LEFT SIDE OF THE BOX LOCATED THE CENTER OF THE SCREEN
                 var destinyX = 200;
                 }
             else
                 {
+                // SETTING THAT THE ENEMY WILL BE MOVING TO THE RIGHT SIDE OF THE BOX LOCATED THE CENTER OF THE SCREEN
                 var destinyX = 250;
                 }
 
-            // MOVING THE GHOST TO THE BOX AT THE CENTER OF THE SCREEN
+            // MOVING THE GHOST TO THE BOX LOCATED THE CENTER OF THE SCREEN
             game.add.tween(enemy).to({x: destinyX, y: 233}, 1000, Phaser.Easing.Linear.None, true).onComplete.add(function()
                 {
                 // CHECKING IF THE ENEMY IS THE BLINKY GHOST
