@@ -1563,19 +1563,15 @@ PacMan.Game.prototype = {
             // CHECKING IF THE ENEMY DIED ON THE FIRST HALF OF THE SCREEN
             if (enemy.position.x<game.width/2)
                 {
-                // MOVING THE GHOST TO THE BOX AT THE CENTER OF THE SCREEN
-                game.add.tween(enemy).to({x: 200}, 1000, Phaser.Easing.Linear.None, true);
-                game.add.tween(enemy).to({y: 233}, 1000, Phaser.Easing.Linear.None, true);
+                var destinyX = 200;
                 }
             else
                 {
-                // MOVING THE GHOST TO THE BOX AT THE CENTER OF THE SCREEN
-                game.add.tween(enemy).to({x: 250}, 1000, Phaser.Easing.Linear.None, true);
-                game.add.tween(enemy).to({y: 233}, 1000, Phaser.Easing.Linear.None, true);
+                var destinyX = 250;
                 }
 
-            // WAITING 1100 MS
-            game.time.events.add(1100, function()
+            // MOVING THE GHOST TO THE BOX AT THE CENTER OF THE SCREEN
+            game.add.tween(enemy).to({x: destinyX, y: 233}, 1000, Phaser.Easing.Linear.None, true).onComplete.add(function()
                 {
                 // CHECKING IF THE ENEMY IS THE BLINKY GHOST
                 if (enemy==game.state.states["PacMan.Game"].blinky)
@@ -1604,7 +1600,7 @@ PacMan.Game.prototype = {
                     // CONVERTING THE PINKY GHOST TO PINKY
                     game.state.states["PacMan.Game"].pinky.loadTexture("imageGamePinky");
                     }
-                });
+                }, this);
             }
 
         // CHECKING IF THE PLAYER HITS A REGULAR ENEMY
